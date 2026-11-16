@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommunitySignal AI - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for futuristic icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- Google Fonts -->
+    <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-brain AI-icon"></i>
+                <h2>CommunitySignal <span>AI</span></h2>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="#"><i class="fa-solid fa-triangle-exclamation"></i> Report Problem</a>
+                <a href="#"><i class="fa-solid fa-kit-medical"></i> Emergency Help</a>
+                <a href="#"><i class="fa-solid fa-droplet"></i> Blood Assistance</a>
+                <a href="#"><i class="fa-solid fa-moon"></i> Night Help</a>
+                <a href="#"><i class="fa-solid fa-shield-halved"></i> Women Safety</a>
+                <a href="#"><i class="fa-solid fa-road"></i> Road & Infrastructure</a>
+                <a href="#"><i class="fa-solid fa-tower-broadcast"></i> Community Signals</a>
+            </nav>
+
+            <div class="user-profile-card">
+                <img src="https://placeholder.com" alt="Profile">
+                <div class="user-info">
+                    <h4>Santanu Dhibar</h4>
+                    <span class="badge">Verified Member</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="main-content">
+            
+            <!-- TOP HEADER -->
+            <header class="top-header">
+                <div class="welcome-text">
+                    <h1>Welcome back, Santanu! 👋</h1>
+                    <p>AI-powered monitoring and reporting of community problems</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search anything...">
+                    </div>
+                    <div class="date-badge"><i class="fa-regular fa-calendar"></i> May 14, 2025</div>
+                </div>
+            </header>
+
+            <!-- KEY PERFORMANCE METRICS (3D TILT ENABLED) -->
+            <section class="metrics-grid">
+                <div class="metric-card cyan-glow" data-tilt>
+                    <div class="card-icon"><i class="fa-solid fa-folder-open"></i></div>
+                    <div class="card-data">
+                        <h3>30,002 <span class="trendup"><i class="fa-solid fa-arrow-up"></i> 12%</span></h3>
+                        <p>Total Reports</p>
+                    </div>
+                </div>
+                <div class="metric-card red-glow" data-tilt>
+                    <div class="card-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                    <div class="card-data">
+                        <h3>1</h3>
+                        <p>High Priority Signals</p>
+                    </div>
+                </div>
+                <div class="metric-card green-glow" data-tilt>
+                    <div class="card-icon"><i class="fa-solid fa-seedling"></i></div>
+                    <div class="card-data">
+                        <h3>8</h3>
+                        <p>Emerging Issues</p>
+                    </div>
+                </div>
+                <div class="metric-card purple-glow" data-tilt>
+                    <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="card-data">
+                        <h3>83.98% <span class="trendup"><i class="fa-solid fa-arrow-up"></i> 5%</span></h3>
+                        <p>AI Accuracy Target</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MIDDLE SECTION GRID -->
+            <section class="content-grid">
+                <!-- FORM CARD -->
+                <div class="grid-card report-form-card" data-tilt data-tilt-max="5">
+                    <h3><i class="fa-solid fa-pen-to-square"></i> Report a Community Problem</h3>
+                    <form id="problemForm">
+                        <label>Problem Category</label>
+                        <select>
+                            <option>Select a community problem</option>
+                            <option>Water System</option>
+                            <option>Road Damage</option>
+                            <option>Noise Pollution</option>
+                        </select>
+                        
+                        <label>Describe the Problem</label>
+                        <textarea placeholder="Please provide details about the issue..." rows="3"></textarea>
+                        
+                        <button type="submit" class="btn-submit">Analyze Community Report</button>
+                    </form>
+                </div>
+
+                <!-- AI INTEL CARD -->
+                <div class="grid-card ai-intelligence-card" data-tilt data-tilt-max="5">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-robot"></i> AI Community Intelligence</h3>
+                        <span class="live-tag">Live AI</span>
+                    </div>
+                    <ul class="intel-list">
+                        <li><i class="fa-solid fa-network-wired"></i> Classification (AI Problem Detection)</li>
+                        <li><i class="fa-solid fa-location-dot"></i> Hotspots (Geographic Clusters)</li>
+                        <li><i class="fa-solid fa-chart-line"></i> Trends (Community Changes)</li>
+                    </ul>
+                </div>
+
+                <!-- ASSISTANCE HUB -->
+                <div class="grid-card assistance-hub-card" data-tilt data-tilt-max="5">
+                    <h3><i class="fa-solid fa-hands-holding-child"></i> Community Assistance Hub</h3>
+                    <div class="hub-action">
+                        <span>Emergency Help Line</span>
+                        <button class="btn-action">Get Help</button>
+                    </div>
+                    <div class="hub-action">
+                        <span>Night Safety Watch</span>
+                        <button class="btn-action border-btn">Find Support</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- EMERGENCY CONTROLLER RIGHT SIDE PANEL -->
+        <aside class="right-panel">
+            <div class="emergency-trigger-zone" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                <i class="fa-solid fa-bell-lightning alarm-bell animate-pulse"></i>
+                <h2>EMERGENCY</h2>
+                <p>Tap to get immediate help</p>
+                <div class="quick-contacts">
+                    <div class="contact-node"><strong>Police</strong><span>100</span></div>
+                    <div class="contact-node"><strong>Ambulance</strong><span>102</span></div>
+                </div>
+                <button class="btn-emergency"><i class="fa-solid fa-phone"></i> Call Emergency</button>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Vanilla-Tilt.js Engine for true 3D perspective physics -->
+    <script src="https://cloudflare.com"></script>
+    <script src="app.js"></script>
+</body>
+</html>

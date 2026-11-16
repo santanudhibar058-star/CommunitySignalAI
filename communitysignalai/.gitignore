@@ -1,0 +1,21 @@
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+# frontend
+frontend/node_modules/
+frontend/dist/
+# generated/local data (keep tracked sample files if needed)
+.DS_Store
+Thumbs.db
+outputs/admin_audit.jsonl
+outputs/admin_notifications.json
+outputs/admin_push_subscriptions.json
+# User-submitted reports are private runtime data; do not publish them.
+outputs/community_reports.csv

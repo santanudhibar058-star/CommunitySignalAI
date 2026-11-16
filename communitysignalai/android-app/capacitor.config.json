@@ -1,0 +1,8 @@
+{
+  "appId": "com.peoplecare.ai",
+  "appName": "PeopleCare AI",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

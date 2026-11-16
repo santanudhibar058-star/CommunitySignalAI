@@ -1,0 +1,192 @@
+.jarvis-core {
+  --jarvis-size: 240px;
+  --jarvis-spectrum: linear-gradient(125deg, #60f7ff 2%, #618bff 27%, #c47bff 52%, #ff83cf 77%, #6cf5d2 100%);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(var(--jarvis-size), 100%);
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  overflow: visible;
+  isolation: isolate;
+  color: #b5f8ff;
+  contain: layout style;
+}
+
+.jarvis-hud {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 7px rgba(48, 210, 250, .2));
+  animation: jarvis-spectrum-cycle 9s linear infinite;
+}
+
+.jarvis-halo {
+  position: absolute;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.jarvis-halo-back {
+  z-index: 0;
+  background: radial-gradient(circle, rgba(43, 224, 255, .32), rgba(47, 117, 255, .17) 34%, rgba(167, 76, 255, .13) 55%, transparent 74%);
+  filter: blur(16px);
+  opacity: .76;
+  animation: jarvis-halo-breathe 4.8s ease-in-out infinite;
+}
+
+.jarvis-halo-front {
+  z-index: 1;
+  width: 48%;
+  background: radial-gradient(circle, rgba(174, 252, 255, .2), rgba(68, 177, 255, .12) 40%, rgba(177, 93, 255, .09) 68%, transparent 76%);
+  filter: blur(8px);
+  animation: jarvis-halo-breathe 3.6s ease-in-out infinite reverse;
+}
+
+.jarvis-ring { transform-box: view-box; transform-origin: center; }
+.jarvis-ring-outer { animation: jarvis-rotate 48s linear infinite; }
+.jarvis-ring-middle { animation: jarvis-rotate-reverse 33s linear infinite; }
+.jarvis-ring-inner { animation: jarvis-rotate 22s linear infinite; }
+.jarvis-track { fill: none; stroke: rgba(101, 185, 239, .2); stroke-width: .7; }
+.jarvis-arc { fill: none; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(66, 220, 255, .88)); }
+.arc-long { stroke-width: 2.3; stroke-dasharray: 154 765; stroke-dashoffset: 36; }
+.arc-short { stroke-width: 1.25; stroke-dasharray: 29 765; stroke-dashoffset: -270; opacity: .72; }
+.arc-middle { stroke-width: 1.65; stroke-dasharray: 198 591; stroke-dashoffset: -390; opacity: .9; }
+.arc-inner { stroke-width: 2.2; stroke-dasharray: 82 377; }
+.arc-inner-reverse { stroke-dasharray: 39 350; stroke-dashoffset: 210; opacity: .64; }
+.jarvis-tick { stroke: rgba(93, 181, 225, .31); stroke-width: .8; }
+.jarvis-tick.major { stroke: rgba(139, 239, 255, .94); stroke-width: 1.7; filter: drop-shadow(0 0 3px rgba(83, 213, 255, .6)); }
+.jarvis-node { fill: #ddffff; filter: drop-shadow(0 0 5px #21c8ff); }
+.node-violet, .particle-violet { fill: #d0adff; filter: drop-shadow(0 0 5px #9a65ff); }
+.jarvis-crosshair { fill: none; stroke: rgba(126, 211, 245, .42); stroke-width: .85; stroke-linecap: round; }
+.crosshair-diagonal { opacity: .52; }
+.jarvis-particle { fill: #a9f6ff; opacity: .58; transform-box: fill-box; transform-origin: center; animation: jarvis-particle-flicker 2.9s ease-in-out infinite alternate; animation-delay: var(--particle-delay, 0s); }
+.jarvis-core-aura { opacity: .82; transform-box: fill-box; transform-origin: center; animation: jarvis-core-pulse 3.4s ease-in-out infinite; }
+.jarvis-aura-blur { opacity: .54; transform-box: fill-box; transform-origin: center; animation: jarvis-aura-pulse 4.2s ease-in-out infinite; }
+.jarvis-core-shell { fill: rgba(5, 22, 45, .95); stroke: rgba(182, 248, 255, .85); stroke-width: 1.6; filter: drop-shadow(0 0 12px rgba(25, 207, 250, .8)); }
+.jarvis-core-light { opacity: .96; transform-box: fill-box; transform-origin: center; animation: jarvis-core-pulse 3.4s ease-in-out infinite; }
+.jarvis-core-inner { fill: rgba(8, 31, 62, .28); stroke: rgba(230, 255, 255, .8); stroke-width: 1; }
+.jarvis-core-glyph { fill: rgba(119, 241, 255, .13); stroke: rgba(225, 255, 255, .93); stroke-width: 1.4; filter: drop-shadow(0 0 5px rgba(103, 239, 255, .65)); }
+.jarvis-core-lines { fill: none; stroke: rgba(239, 255, 255, .94); stroke-width: .95; stroke-linecap: round; stroke-linejoin: round; }
+.jarvis-core-point { fill: #fff; filter: drop-shadow(0 0 5px #fff); }
+
+.jarvis-orbit {
+  position: absolute;
+  z-index: 1;
+  inset: 18%;
+  border: 1px solid rgba(76, 210, 250, .28);
+  border-radius: 50%;
+  transform: rotateX(66deg) rotate(-28deg);
+  pointer-events: none;
+  box-shadow: 0 0 13px rgba(76, 210, 250, .08), inset 0 0 13px rgba(125, 119, 255, .06);
+}
+
+.jarvis-orbit i {
+  position: absolute;
+  top: 50%;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b4fbff;
+  box-shadow: 0 0 10px #19c5ff, 0 0 18px rgba(25, 197, 255, .55);
+}
+
+.orbit-a { animation: jarvis-orbit-a 13s linear infinite; }
+.orbit-b { inset: 27%; transform: rotateY(66deg) rotate(24deg); border-color: rgba(173, 133, 255, .34); animation: jarvis-orbit-b 19s linear infinite reverse; }
+.orbit-b i { background: #ddbdff; box-shadow: 0 0 10px #a178ff, 0 0 18px rgba(161, 120, 255, .55); }
+.orbit-c { inset: 10%; transform: rotateX(57deg) rotate(63deg); border-color: rgba(255, 147, 225, .2); animation: jarvis-orbit-c 25s linear infinite; }
+.orbit-c i { top: auto; left: auto; right: 12%; bottom: 16%; width: 4px; height: 4px; background: #ffc9f1; box-shadow: 0 0 9px #e875f1; }
+
+.jarvis-energy-wave {
+  position: absolute;
+  z-index: 1;
+  inset: 29%;
+  border: 1px solid rgba(99, 229, 255, .32);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(.82);
+  pointer-events: none;
+}
+
+.jarvis-readout {
+  position: absolute;
+  z-index: 4;
+  bottom: -3%;
+  display: grid;
+  gap: 4px;
+  color: rgba(151, 190, 224, .76);
+  font-size: clamp(7px, 1.8vw, 9px);
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(51, 201, 255, .3);
+}
+
+.jarvis-readout b { color: #8df7ff; }
+.jarvis-readout strong { color: #c6f8ff; font-size: 1em; letter-spacing: .22em; }
+.jarvis-readout span { opacity: .72; font-size: .78em; letter-spacing: .17em; }
+.jarvis-core-compact { width: min(var(--jarvis-size, 48px), 100%); }
+.jarvis-core-compact .jarvis-halo { width: 82%; }
+.jarvis-core-compact .jarvis-orbit { inset: 15%; }
+.jarvis-core-compact .orbit-b { inset: 25%; }
+.jarvis-core-compact .orbit-c { inset: 7%; }
+
+.jarvis-core[data-state="listening"] .jarvis-ring-outer,
+.jarvis-core[data-state="listening"] .jarvis-ring-middle { animation-duration: 10s; }
+.jarvis-core[data-state="listening"] .jarvis-core-aura,
+.jarvis-core[data-state="listening"] .jarvis-core-light { animation-duration: 1.25s; }
+.jarvis-core[data-state="listening"] .jarvis-energy-wave { animation: jarvis-wave 1.7s ease-out infinite; }
+.jarvis-core[data-state="listening"] .jarvis-halo-back { opacity: .96; transform: scale(1.12); }
+
+.jarvis-core[data-state="thinking"] .jarvis-ring-outer { animation-duration: 5.5s; }
+.jarvis-core[data-state="thinking"] .jarvis-ring-middle { animation-duration: 4.2s; }
+.jarvis-core[data-state="thinking"] .jarvis-ring-inner { animation-duration: 3s; }
+.jarvis-core[data-state="thinking"] .jarvis-halo-back { filter: blur(11px) brightness(1.8); opacity: 1; }
+.jarvis-core[data-state="thinking"] .jarvis-hud { filter: drop-shadow(0 0 15px rgba(93, 212, 255, .56)); animation-duration: 3.4s; }
+.jarvis-core[data-state="thinking"] .jarvis-particle { animation-duration: .7s; opacity: .96; }
+.jarvis-core[data-state="thinking"] .jarvis-core-light { animation-duration: .9s; }
+.jarvis-core[data-state="thinking"] .jarvis-energy-wave { animation: jarvis-wave 1.2s ease-out infinite; }
+
+.jarvis-core[data-state="speaking"] .jarvis-core-aura,
+.jarvis-core[data-state="speaking"] .jarvis-core-light { animation-duration: .48s; }
+.jarvis-core[data-state="speaking"] .jarvis-hud { filter: drop-shadow(0 0 16px rgba(97, 220, 255, .57)); }
+.jarvis-core[data-state="speaking"] .jarvis-ring-outer { animation-duration: 14s; }
+.jarvis-core[data-state="speaking"] .jarvis-energy-wave { animation: jarvis-wave .9s ease-out infinite; }
+
+.jarvis-core[data-state="success"] .jarvis-core-shell { stroke: rgba(133, 255, 224, .95); filter: drop-shadow(0 0 16px rgba(65, 255, 196, .82)); }
+.jarvis-core[data-state="success"] .jarvis-core-aura { animation-duration: 1.4s; }
+.jarvis-core[data-state="error"] .jarvis-hud { animation-duration: 15s; filter: hue-rotate(-24deg) drop-shadow(0 0 11px rgba(255, 164, 110, .3)); }
+.jarvis-core[data-state="error"] .jarvis-core-shell { stroke: rgba(255, 190, 145, .9); filter: drop-shadow(0 0 13px rgba(255, 132, 74, .72)); }
+.jarvis-core[data-state="error"] .jarvis-energy-wave { border-color: rgba(255, 164, 110, .55); opacity: .5; }
+
+@keyframes jarvis-rotate { to { transform: rotate(360deg); } }
+@keyframes jarvis-rotate-reverse { to { transform: rotate(-360deg); } }
+@keyframes jarvis-orbit-a { to { transform: rotateX(66deg) rotate(332deg); } }
+@keyframes jarvis-orbit-b { to { transform: rotateY(66deg) rotate(384deg); } }
+@keyframes jarvis-orbit-c { to { transform: rotateX(57deg) rotate(423deg); } }
+@keyframes jarvis-halo-breathe { 0%, 100% { opacity: .62; scale: .92; } 50% { opacity: 1; scale: 1.08; } }
+@keyframes jarvis-core-pulse { 0%, 100% { opacity: .79; scale: .96; } 50% { opacity: 1; scale: 1.06; } }
+@keyframes jarvis-aura-pulse { 0%, 100% { opacity: .34; scale: .92; } 50% { opacity: .74; scale: 1.12; } }
+@keyframes jarvis-particle-flicker { from { opacity: .23; scale: .65; } to { opacity: .96; scale: 1.45; } }
+@keyframes jarvis-wave { 0% { opacity: .82; scale: .7; } 100% { opacity: 0; scale: 1.95; } }
+@keyframes jarvis-spectrum-cycle { from { filter: hue-rotate(0deg) saturate(1.22); } to { filter: hue-rotate(360deg) saturate(1.35); } }
+
+@media (max-width: 700px) {
+  .jarvis-orbit { inset: 22%; }
+  .orbit-b { inset: 30%; }
+  .orbit-c { inset: 14%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jarvis-core *, .jarvis-core::before, .jarvis-core::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .jarvis-core[data-state="listening"] .jarvis-energy-wave,
+  .jarvis-core[data-state="thinking"] .jarvis-energy-wave,
+  .jarvis-core[data-state="speaking"] .jarvis-energy-wave { opacity: .42; scale: 1; }
+}

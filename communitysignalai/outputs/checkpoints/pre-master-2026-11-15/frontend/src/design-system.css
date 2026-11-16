@@ -1,0 +1,807 @@
+/* PeopleCare visual system: quiet navy surfaces, clear cool accents, low-distance motion. */
+:root {
+  color-scheme: dark;
+  --bg: #08111d;
+  --panel: #0e1a29;
+  --panel2: #142438;
+  --line: rgba(157, 180, 205, .15);
+  --text: #edf4fb;
+  --muted: #96a8bb;
+  --purple: #9188ee;
+  --blue: #5f91e8;
+  --cyan: #55c2c9;
+  --green: #59c59a;
+  --orange: #e6b369;
+  --red: #e67580;
+  --rose: #dc7c91;
+  --shadow: 0 22px 54px rgba(0, 5, 13, .28);
+  --pc-motion-fast: 150ms;
+  --pc-motion-base: 220ms;
+  --pc-motion-enter: 420ms;
+  --pc-motion-ease: cubic-bezier(.2, .75, .25, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI Variable", "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.app-shell {
+  background:
+    radial-gradient(ellipse at 82% -16%, rgba(82, 111, 180, .12), transparent 40%),
+    radial-gradient(ellipse at 12% 22%, rgba(49, 153, 162, .07), transparent 33%),
+    var(--bg);
+}
+
+.sidebar {
+  background: linear-gradient(180deg, #0a1421 0%, #08111c 100%);
+  border-right-color: rgba(157, 180, 205, .12);
+}
+
+.brand-mark {
+  background: linear-gradient(140deg, #287f9b, #586bd4 65%, #7e70d8);
+  box-shadow: 0 9px 26px rgba(60, 119, 167, .23);
+}
+
+.nav-item {
+  font-size: 12px;
+  min-height: 40px;
+  transition: color var(--pc-motion-base), background var(--pc-motion-base),
+    border-color var(--pc-motion-base), transform var(--pc-motion-base);
+}
+
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(55, 154, 166, .17), rgba(83, 112, 188, .08));
+  box-shadow: inset 3px 0 var(--cyan), 0 0 22px rgba(63, 158, 165, .05);
+}
+
+.nav-item::before {
+  background: linear-gradient(90deg, rgba(73, 172, 177, .12), transparent);
+}
+
+.brand strong { font-size: 15px; }
+.brand small { font-size: 9px; letter-spacing: .9px; }
+.profile-mini strong { font-size: 13px; }
+.profile-mini span { font-size: 10px; }
+.nav-label { font-size: 9px; }
+.nav-count { font-size: 9px; }
+.system-row { font-size: 11px; }
+.system-card small { font-size: 9px; }
+.settings-btn { font-size: 11px; }
+
+.topbar {
+  background: rgba(8, 17, 29, .88);
+  border-bottom-color: rgba(157, 180, 205, .12);
+  box-shadow: 0 10px 28px rgba(0, 5, 13, .14);
+}
+
+.top-search,
+.icon-btn,
+textarea,
+input,
+select {
+  background-color: #0b1725;
+  border-color: rgba(157, 180, 205, .17);
+}
+
+.top-search:focus-within {
+  border-color: rgba(85, 194, 201, .5);
+  box-shadow: 0 0 0 3px rgba(85, 194, 201, .08);
+}
+
+.top-search input { font-size: 13px; }
+.live-pill { font-size: 9px; }
+.top-user { font-size: 12px; }
+
+.live-pill.live,
+.status-dot.connected {
+  color: #8be0bd;
+}
+
+.card,
+.report-card,
+.intelligence-card,
+.heat-card,
+.category-card,
+.chart-card,
+.metric-story,
+.activity-card,
+.table-card,
+.command-health,
+.command-risk,
+.command-signals-panel,
+.command-report-panel {
+  border-color: rgba(157, 180, 205, .14);
+  background: linear-gradient(145deg, rgba(15, 28, 44, .97), rgba(10, 20, 32, .98));
+}
+
+.kpi-card {
+  border-color: rgba(157, 180, 205, .15);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(85, 194, 201, .055), transparent 38%),
+    linear-gradient(145deg, rgba(17, 31, 48, .98), rgba(10, 20, 32, .98));
+}
+
+.command-hero {
+  background:
+    radial-gradient(ellipse at 12% 20%, rgba(50, 140, 151, .14), transparent 56%),
+    linear-gradient(135deg, rgba(16, 31, 48, .98), rgba(10, 19, 33, .98));
+}
+
+.command-hero-glow {
+  background: radial-gradient(circle, rgba(82, 120, 188, .18), transparent 68%);
+}
+
+.command-hero h2 em,
+.hero-kicker,
+.text-btn,
+.category-foot button {
+  color: var(--cyan);
+}
+
+.command-hero h2 em {
+  background-image: linear-gradient(90deg, #63c5c7, #8499ed);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.eyebrow,
+.mini-kicker { font-size: 10px; }
+.page-header h1 { font-size: clamp(28px, 2.2vw, 34px); }
+.page-header p { font-size: 13px; }
+.command-hero .hero-kicker { font-size: 10px; }
+.command-hero h2 { font-size: clamp(31px, 2.65vw, 39px); }
+.command-hero p { font-size: 13px; }
+.hero-footnote { font-size: 9px; }
+.hero-primary,
+.hero-secondary { font-size: 11px; }
+.card-heading h2,
+.section-title h2 { font-size: 17px; }
+.command-health .health-main span,
+.health-grid span,
+.risk-number span { font-size: 10px; }
+.signal-mini-list div { font-size: 10px; }
+.command-kpis .kpi-top { font-size: 10px; }
+.command-kpis .kpi small { font-size: 9px; }
+.command-kpis .kpi > strong { font-size: 30px; }
+.command-signal-row .signal-row-main span { font-size: 9px; }
+.command-signal-row .signal-row-growth { font-size: 10px; }
+.command-report-panel label { font-size: 11px; }
+.command-report-panel textarea,
+.command-report-panel input,
+.command-report-panel select { font-size: 12px; }
+.command-report-panel .form-bottom span { font-size: 10px; }
+.response-service-label { font-size: 8px; }
+.response-service-copy small { font-size: 9px; }
+.response-service-action { font-size: 8px; }
+.rapid-actions b { font-size: 10px; }
+.rapid-actions small { font-size: 9px; }
+.response-status { font-size: 8px; }
+.response-safety-note b { font-size: 9px; }
+.response-safety-note small { font-size: 8px; }
+
+.radar-core,
+.orbit-core {
+  background: radial-gradient(circle at 35% 30%, #79ccd0, #276d81 62%, #12243d);
+  box-shadow: 0 0 34px rgba(77, 177, 184, .28);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #327f9f, #586acb);
+  box-shadow: 0 10px 25px rgba(50, 117, 156, .2), inset 0 1px rgba(255,255,255,.12);
+  transition: transform var(--pc-motion-base) var(--pc-motion-ease),
+    box-shadow var(--pc-motion-base), filter var(--pc-motion-base);
+}
+
+.primary-btn:hover {
+  box-shadow: 0 15px 32px rgba(50, 117, 156, .25), 0 0 20px rgba(83, 135, 186, .1);
+}
+
+.hero-secondary,
+.help-card,
+.icon-btn,
+.mode-btn,
+.chat-fab,
+.rapid-action,
+.response-service {
+  transition-duration: var(--pc-motion-base);
+  transition-timing-function: var(--pc-motion-ease);
+}
+
+.hero-secondary:hover,
+.help-card:hover,
+.card:hover,
+.report-card:hover,
+.intelligence-card:hover,
+.activity-card:hover,
+.chart-card:hover,
+.metric-story:hover,
+.heat-card:hover,
+.category-card:hover,
+.command-health:hover,
+.command-risk:hover {
+  transform: translateY(-2px);
+  border-color: rgba(85, 194, 201, .23);
+  box-shadow: 0 20px 44px rgba(0, 5, 13, .25);
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(85, 194, 201, .26);
+  box-shadow: 0 20px 42px rgba(0, 5, 13, .27);
+}
+
+/* Avoid reserving a GPU layer for every dashboard surface. */
+.card,
+.kpi-card,
+.help-card,
+.table-card,
+.activity-card,
+.chart-card,
+.metric-story,
+.heat-card,
+.category-card,
+.report-card,
+.intelligence-card {
+  will-change: auto;
+}
+
+/* A quiet, shared entrance cadence across the major routes. */
+.page-content.page-enter {
+  animation: peoplecare-page-enter var(--pc-motion-enter) var(--pc-motion-ease) both;
+}
+
+.page-content.page-enter > *:not(style) {
+  animation: peoplecare-surface-enter 420ms var(--pc-motion-ease) both;
+}
+
+.page-content.page-enter > :nth-child(2) { animation-delay: 35ms; }
+.page-content.page-enter > :nth-child(3) { animation-delay: 70ms; }
+.page-content.page-enter > :nth-child(4) { animation-delay: 105ms; }
+.page-content.page-enter > :nth-child(5) { animation-delay: 140ms; }
+.page-content.page-enter > :nth-child(6) { animation-delay: 175ms; }
+
+.page-enter :is(
+  .page-header,
+  .command-hero-grid,
+  .command-kpis,
+  .command-emergency-section,
+  .command-intelligence-grid,
+  .command-lower-grid,
+  .analytics-grid,
+  .analytics-panels,
+  .insight-grid,
+  .single-panel,
+  .road-form,
+  .response-layout,
+  .peoplecare-header-bar,
+  .peoplecare-workspace-grid
+) {
+  animation: peoplecare-surface-enter 480ms var(--pc-motion-ease) both;
+}
+
+.page-enter .command-kpis { animation-delay: 55ms; }
+.page-enter .command-emergency-section { animation-delay: 95ms; }
+.page-enter .command-intelligence-grid { animation-delay: 135ms; }
+.page-enter .command-lower-grid { animation-delay: 175ms; }
+
+@keyframes peoplecare-page-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes peoplecare-surface-enter {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.page-content :is(.card, .kpi-card, .help-card, .command-health, .command-risk) {
+  border-color: rgba(157, 180, 205, .14);
+}
+
+.page-content :is(button, a, input, textarea, select, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid rgba(100, 207, 210, .9);
+  outline-offset: 3px;
+}
+
+.mobile-nav-trigger,
+.mobile-nav-backdrop {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .sidebar {
+    z-index: 45;
+    width: min(84vw, 286px);
+    padding: 20px 15px;
+    transform: translateX(-103%);
+    visibility: hidden;
+    transition: transform 260ms var(--pc-motion-ease), visibility 260ms;
+    box-shadow: 22px 0 60px rgba(0, 5, 13, .4);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .sidebar .brand > div,
+  .sidebar .profile-mini > div:not(.avatar),
+  .sidebar .nav-item span:not(.nav-icon),
+  .sidebar .nav-label,
+  .sidebar .nav-count,
+  .sidebar .sidebar-footer {
+    display: block;
+  }
+
+  .sidebar .nav-item {
+    justify-content: flex-start;
+    padding: 10px;
+  }
+
+  .main-shell {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .mobile-nav-trigger {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    color: var(--text);
+    background: rgba(18, 34, 52, .84);
+    font-size: 18px;
+    cursor: pointer;
+    transition: background var(--pc-motion-base), border-color var(--pc-motion-base), transform var(--pc-motion-fast);
+  }
+
+  .mobile-nav-trigger:hover {
+    border-color: rgba(85, 194, 201, .45);
+    background: rgba(25, 48, 66, .94);
+  }
+
+  .mobile-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    border: 0;
+    padding: 0;
+    background: rgba(3, 9, 16, .68);
+    backdrop-filter: blur(4px);
+    animation: peoplecare-backdrop-enter 180ms ease-out both;
+  }
+
+  .mobile-nav-backdrop:active { transform: none; }
+
+  .topbar {
+    gap: 12px;
+    padding: 0 18px;
+  }
+
+  .mobile-brand { margin-right: auto; }
+}
+
+@keyframes peoplecare-backdrop-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .topbar { padding: 0 12px; }
+  .mobile-nav-trigger { width: 36px; height: 36px; flex-basis: 36px; }
+  .mobile-brand { font-size: 10px; }
+  .page-header h1 { letter-spacing: -.5px; }
+  .command-hero { border-radius: 18px; }
+}
+
+@media (hover: none) {
+  .card:hover,
+  .kpi-card:hover,
+  .help-card:hover,
+  .command-health:hover,
+  .command-risk:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .page-content.page-enter,
+  .page-content.page-enter > *:not(style),
+  .page-enter :is(.page-header, .command-hero-grid, .command-kpis, .command-emergency-section,
+    .command-intelligence-grid, .command-lower-grid, .analytics-grid, .analytics-panels,
+    .insight-grid, .single-panel, .road-form, .response-layout, .peoplecare-header-bar,
+    .peoplecare-workspace-grid) {
+    animation: none !important;
+  }
+}
+
+/* Premium glass surfaces and restrained 3D depth. */
+.sidebar,
+.topbar {
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+}
+
+.sidebar {
+  background: linear-gradient(180deg, rgba(10, 21, 34, .9), rgba(8, 17, 28, .88));
+  box-shadow: 16px 0 44px rgba(0, 5, 13, .16), inset -1px 0 rgba(207, 229, 244, .035);
+}
+
+.topbar {
+  background: rgba(8, 17, 29, .76);
+  box-shadow: 0 12px 34px rgba(0, 5, 13, .18), inset 0 -1px rgba(199, 223, 238, .035);
+}
+
+.app-shell :is(
+  .command-hero,
+  .command-health,
+  .command-risk,
+  .command-signals-panel,
+  .command-report-panel,
+  .kpi-card,
+  .conversation-sidebar,
+  .avatar-telemetry-card,
+  .chat-workspace-card,
+  .modal,
+  .emergency-modal-large,
+  .peoplecare-panel,
+  .chat-panel
+) {
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
+  border-color: rgba(174, 204, 224, .19);
+  box-shadow: 0 22px 56px rgba(0, 5, 13, .25), inset 0 1px rgba(234, 247, 255, .065);
+}
+
+.app-shell :is(.command-hero, .command-health, .command-risk, .command-signals-panel, .command-report-panel, .kpi-card) {
+  background:
+    linear-gradient(135deg, rgba(218, 239, 255, .055), rgba(218, 239, 255, .012) 38%, transparent 66%),
+    linear-gradient(145deg, rgba(17, 35, 53, .76), rgba(9, 20, 33, .72));
+}
+
+.app-shell .command-hero {
+  background:
+    radial-gradient(ellipse at 14% 12%, rgba(75, 176, 184, .13), transparent 51%),
+    radial-gradient(ellipse at 88% 70%, rgba(92, 118, 199, .12), transparent 42%),
+    linear-gradient(135deg, rgba(18, 39, 57, .82), rgba(11, 22, 38, .72));
+  border-color: rgba(115, 189, 204, .28);
+}
+
+.app-shell .command-health,
+.app-shell .command-risk {
+  background:
+    linear-gradient(135deg, rgba(218, 239, 255, .055), transparent 50%),
+    rgba(13, 27, 43, .74);
+}
+
+.app-shell .command-signals-panel,
+.app-shell .command-report-panel,
+.app-shell .kpi-card {
+  background:
+    linear-gradient(135deg, rgba(218, 239, 255, .045), transparent 45%),
+    rgba(14, 28, 44, .68);
+}
+
+.app-shell .conversation-sidebar,
+.app-shell .avatar-telemetry-card,
+.app-shell .chat-workspace-card {
+  background:
+    linear-gradient(135deg, rgba(224, 241, 255, .05), transparent 43%),
+    rgba(11, 24, 40, .72);
+}
+
+.app-shell :is(.modal, .emergency-modal-large) {
+  background:
+    linear-gradient(140deg, rgba(221, 239, 255, .075), transparent 38%),
+    rgba(10, 20, 34, .91);
+  border-color: rgba(174, 204, 224, .23);
+}
+
+.app-shell .top-search,
+.app-shell .icon-btn,
+.app-shell .profile-mini,
+.app-shell .system-card,
+.app-shell .mode-btn,
+.app-shell .quick-chip,
+.app-shell .conversation-item.active,
+.app-shell .composer-bar {
+  background-color: rgba(15, 32, 50, .72);
+  border-color: rgba(162, 192, 214, .18);
+}
+
+.app-shell :is(.mode-btn.active, .quick-chip:hover, .conversation-item.active) {
+  border-color: rgba(85, 194, 201, .42);
+  background: linear-gradient(135deg, rgba(48, 132, 150, .24), rgba(82, 106, 174, .18));
+  color: #e9fbff;
+}
+
+.app-shell .peoplecare-view-container .peoplecare-header-bar,
+.app-shell .peoplecare-view-container .conversation-sidebar,
+.app-shell .peoplecare-view-container .avatar-telemetry-card,
+.app-shell .peoplecare-view-container .chat-workspace-card {
+  background:
+    linear-gradient(135deg, rgba(224, 241, 255, .055), transparent 48%),
+    rgba(11, 24, 40, .76);
+  border-color: rgba(154, 197, 218, .2);
+  box-shadow: 0 20px 48px rgba(0, 5, 13, .22), inset 0 1px rgba(235, 248, 255, .06);
+  -webkit-backdrop-filter: blur(15px) saturate(135%);
+  backdrop-filter: blur(15px) saturate(135%);
+}
+
+.app-shell .peoplecare-view-container .platform-tag,
+.app-shell .peoplecare-view-container .conversation-sidebar-heading small,
+.app-shell .peoplecare-view-container .avatar-radar-label {
+  color: #69c9ce;
+}
+
+.app-shell .peoplecare-view-container .mode-btn.active {
+  background: rgba(73, 170, 180, .16);
+  border-color: rgba(96, 202, 206, .48);
+  color: #86d9dc;
+}
+
+.app-shell .peoplecare-view-container .avatar-radar {
+  background: radial-gradient(circle, rgba(87, 163, 180, .16), rgba(19, 33, 53, .1) 48%, transparent 72%);
+}
+
+.app-shell .peoplecare-view-container .avatar-radar::before {
+  border-color: rgba(110, 195, 207, .3);
+  box-shadow: 0 0 22px rgba(74, 177, 190, .08), inset 0 0 24px rgba(96, 139, 207, .08);
+}
+
+.app-shell .peoplecare-view-container .avatar-radar::after {
+  background: conic-gradient(from 20deg, transparent 0deg, rgba(91, 203, 209, .12) 44deg, transparent 90deg);
+  animation-duration: 26s;
+}
+
+.app-shell .peoplecare-view-container .avatar-radar-orbit,
+.app-shell .peoplecare-view-container .orbit-outer {
+  border-color: rgba(105, 190, 205, .24);
+}
+
+.app-shell .peoplecare-view-container .status-pill.ready,
+.app-shell .peoplecare-view-container .status-pill.responding,
+.app-shell .peoplecare-view-container .status-pill.greeting {
+  background: rgba(74, 176, 187, .15);
+  color: #7bd1d5;
+}
+
+.app-shell .peoplecare-view-container .voice-notice {
+  border-color: rgba(92, 193, 198, .26);
+  background: rgba(29, 78, 91, .45);
+  box-shadow: 0 16px 44px rgba(0, 5, 13, .22);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.app-shell :is(.command-hero, .command-health, .command-risk, .command-signals-panel,
+  .command-report-panel, .kpi-card, .conversation-sidebar, .avatar-telemetry-card,
+  .chat-workspace-card, .peoplecare-panel, .response-service, .emergency-service-card) {
+  transition: border-color 240ms var(--pc-motion-ease), box-shadow 240ms var(--pc-motion-ease),
+    transform 240ms var(--pc-motion-ease), background-color 240ms var(--pc-motion-ease);
+}
+
+.app-shell :is(.command-hero, .command-signals-panel, .command-report-panel,
+  .conversation-sidebar, .avatar-telemetry-card, .chat-workspace-card):hover {
+  border-color: rgba(115, 194, 204, .28);
+  box-shadow: 0 25px 62px rgba(0, 5, 13, .28), inset 0 1px rgba(234, 247, 255, .075);
+}
+
+.app-shell .radar-ring {
+  border-color: rgba(112, 194, 207, .17);
+  box-shadow: inset 0 0 38px rgba(80, 156, 186, .035), 0 0 26px rgba(80, 156, 186, .025);
+}
+
+.app-shell .radar-sweep { opacity: .58; animation-duration: 7.5s; }
+.app-shell .radar-core { box-shadow: 0 0 34px rgba(76, 179, 188, .29), inset 0 1px rgba(255,255,255,.34); }
+.app-shell .radar-node { animation: peoplecare-node-breathe 3.2s ease-in-out infinite; }
+.app-shell .radar-node:nth-of-type(2) { animation-delay: 450ms; }
+.app-shell .radar-node:nth-of-type(3) { animation-delay: 900ms; }
+.app-shell .radar-node:nth-of-type(4) { animation-delay: 1350ms; }
+
+@keyframes peoplecare-node-breathe {
+  0%, 100% { opacity: .72; transform: scale(.88); }
+  50% { opacity: 1; transform: scale(1.16); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell .radar-node { animation: none !important; }
+}
+
+/* Final density and readability pass across the existing product surfaces. */
+.page-content {
+  padding: 22px clamp(18px, 2vw, 30px) 34px;
+}
+
+.page-header { margin-bottom: 14px; }
+.page-header p { font-size: 14px; line-height: 1.6; }
+.eyebrow, .mini-kicker { font-size: 10px; }
+
+.brand strong { font-size: 16px; }
+.brand small { font-size: 10px; }
+.nav-label { font-size: 10px; }
+.nav-item { min-height: 42px; font-size: 13px; }
+.top-search input { font-size: 14px; }
+.live-pill { font-size: 10px; }
+.top-user { font-size: 13px; }
+.system-card small { font-size: 10px; }
+
+.command-kpis { gap: 12px; margin: 16px 0 20px; }
+.kpi-title { font-size: 11px; }
+.kpi-meta { font-size: 11px; }
+.section-block { margin: 18px 0; }
+.section-title { margin-bottom: 12px; }
+.command-emergency-section { margin-top: 18px; }
+.emergency-dashboard-layout { gap: 14px; }
+.emergency-dashboard-services { gap: 12px; }
+.command-intelligence-grid { gap: 14px; margin-top: 18px; }
+.command-lower-grid { gap: 14px; margin-top: 14px; }
+.command-activity { margin-top: 14px; }
+
+.app-shell .peoplecare-view-container { gap: 14px; }
+.app-shell .peoplecare-view-container .peoplecare-header-bar {
+  gap: 14px 20px;
+  padding: 18px 20px;
+}
+.app-shell .peoplecare-view-container .header-titles h1 { font-size: 26px; }
+.app-shell .peoplecare-view-container .subtitle { font-size: 14px; line-height: 1.5; }
+.app-shell .peoplecare-view-container .platform-tag { font-size: 10px; }
+.app-shell .peoplecare-view-container .header-controls { gap: 10px; }
+.app-shell .peoplecare-view-container .provider-tag { font-size: 11px; line-height: 1.45; }
+.app-shell .peoplecare-view-container .mode-btn { font-size: 12px; padding: 7px 11px; }
+.app-shell .peoplecare-view-container .peoplecare-workspace-grid {
+  align-items: start;
+  gap: 14px;
+}
+.app-shell .peoplecare-view-container .conversation-sidebar {
+  height: clamp(400px, calc(100vh - 360px), 520px);
+  padding: 15px 12px;
+}
+.app-shell .peoplecare-view-container .conversation-item span { font-size: 13px; }
+.app-shell .peoplecare-view-container .conversation-item small,
+.app-shell .peoplecare-view-container .conversation-sidebar-foot { font-size: 11px; line-height: 1.5; }
+.app-shell .peoplecare-view-container .avatar-telemetry-card {
+  gap: 12px;
+  padding: 16px;
+}
+.app-shell .peoplecare-view-container .avatar-hint {
+  margin-top: 4px;
+  color: #9aadc0;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.app-shell .peoplecare-view-container .telemetry-block,
+.app-shell .peoplecare-view-container .diagnostics-block { padding: 13px; }
+.app-shell .peoplecare-view-container .telemetry-block h4,
+.app-shell .peoplecare-view-container .diagnostics-block h4 { font-size: 12px; }
+.app-shell .peoplecare-view-container .telemetry-row { gap: 8px; font-size: 12px; line-height: 1.45; }
+.app-shell .peoplecare-view-container .chat-workspace-card {
+  height: clamp(560px, calc(100vh - 280px), 640px);
+  padding: 15px;
+}
+.app-shell .peoplecare-view-container .quick-chip { font-size: 11px; }
+.app-shell .peoplecare-view-container .msg-sender { font-size: 10px; }
+.app-shell .peoplecare-view-container .msg-bubble { font-size: 14px; line-height: 1.65; }
+.app-shell .peoplecare-view-container .composer-bar textarea { font-size: 14px; }
+.app-shell .peoplecare-view-container .composer-subbar,
+.app-shell .peoplecare-view-container .voice-controls label { font-size: 11px; }
+.app-shell .peoplecare-view-container .voice-controls select,
+.app-shell .peoplecare-view-container .voice-mode-btn { font-size: 11px; }
+
+@media (max-width: 1220px) {
+  .app-shell .peoplecare-view-container .conversation-sidebar { height: 180px; }
+}
+
+@media (max-width: 760px) {
+  .page-content { padding: 16px 14px 28px; }
+  .app-shell .peoplecare-view-container .peoplecare-header-bar { padding: 15px; }
+  .app-shell .peoplecare-view-container .header-titles h1 { font-size: 23px; }
+  .app-shell .peoplecare-view-container .chat-workspace-card {
+    height: min(72vh, 680px);
+    min-height: 520px;
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intelligence-card { animation: none !important; }
+}
+
+/* Holographic globe inspired by the supplied blue-violet control-room references. */
+.app-shell .signal-radar .radar-globe {
+  position: absolute;
+  z-index: 2;
+  width: clamp(124px, 12vw, 174px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(127, 213, 255, .52);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 28% 27%, rgba(195, 172, 255, .65) 0 3%, transparent 19%),
+    radial-gradient(ellipse at 68% 46%, rgba(84, 179, 255, .44) 0 8%, transparent 24%),
+    radial-gradient(ellipse at 37% 68%, rgba(148, 103, 255, .38) 0 10%, transparent 27%),
+    radial-gradient(circle at 34% 27%, rgba(110, 192, 255, .42), rgba(32, 74, 138, .34) 44%, rgba(5, 17, 37, .86) 78%);
+  box-shadow: inset -20px -16px 35px rgba(2, 10, 25, .72),
+    inset 4px 2px 18px rgba(177, 160, 255, .24),
+    0 0 32px rgba(72, 161, 255, .24), 0 0 64px rgba(139, 92, 246, .14);
+  transform-style: preserve-3d;
+  animation: pc-globe-drift 16s ease-in-out infinite;
+}
+
+.app-shell .signal-radar .radar-globe::before,
+.app-shell .signal-radar .radar-globe::after {
+  content: "";
+  position: absolute;
+  inset: -1%;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.app-shell .signal-radar .radar-globe::before {
+  inset: -6% 22%;
+  border: 1px solid rgba(174, 212, 255, .55);
+  box-shadow: 0 0 12px rgba(115, 197, 255, .22), inset 0 0 12px rgba(115, 197, 255, .16);
+  transform: rotateZ(-17deg);
+  animation: pc-globe-meridian 18s linear infinite;
+}
+
+.app-shell .signal-radar .radar-globe::after {
+  background: repeating-linear-gradient(0deg, transparent 0 12%, rgba(177, 207, 255, .2) 12.4% 12.8%, transparent 13.2% 24%),
+    repeating-linear-gradient(90deg, transparent 0 17%, rgba(146, 197, 255, .14) 17.4% 17.8%, transparent 18.2% 34%);
+  mask-image: radial-gradient(circle, #000 57%, transparent 72%);
+  opacity: .82;
+}
+
+.app-shell .signal-radar .radar-core {
+  z-index: 3;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(218, 232, 255, .54);
+  background: radial-gradient(circle at 35% 26%, rgba(135, 193, 255, .95), rgba(40, 117, 183, .9) 46%, rgba(13, 35, 72, .94));
+  box-shadow: 0 0 28px rgba(100, 190, 255, .4), inset 0 1px rgba(255, 255, 255, .46);
+}
+
+.app-shell .signal-radar .radar-core span { color: #d9c6ff; }
+.app-shell .signal-radar .radar-node { z-index: 4; }
+
+@keyframes pc-globe-drift {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-5px) rotate(3deg); }
+}
+
+@keyframes pc-globe-meridian {
+  to { transform: rotateZ(343deg); }
+}
+
+@media (max-width: 850px) {
+  .app-shell .signal-radar .radar-globe { width: 132px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell .signal-radar .radar-globe,
+  .app-shell .signal-radar .radar-globe::before { animation: none !important; }
+}

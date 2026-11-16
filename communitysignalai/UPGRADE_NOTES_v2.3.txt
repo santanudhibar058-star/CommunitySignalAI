@@ -1,0 +1,4 @@
+PeopleCare AI v2.3 — Professional UI upgrade
+- Refined typography, spacing, cards, navigation, dashboard hierarchy and responsive behavior.
+- Preserves existing React components, report flows, ML prediction API, chat integration and emergency service visual assets.
+- This is a UI polish pass only. RAG, multi-agent workflows, and Android APK generation are separate implementation/testing phases.

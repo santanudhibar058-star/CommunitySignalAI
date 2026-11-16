@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CommunitySignal AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+
+            <div>
+                <div class="brand-name">
+                    CommunitySignal <span>AI</span>
+                </div>
+
+                <div class="brand-subtitle">
+                    Safer Communities · Smarter Tomorrow
+                </div>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a
+                href="#dashboard"
+                class="nav-link active"
+            >
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a
+                href="#report"
+                class="nav-link"
+            >
+                <i class="fa-regular fa-file-lines"></i>
+                <span>Report Problem</span>
+            </a>
+
+            <a
+                href="#intelligence"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-microchip"></i>
+                <span>AI Intelligence</span>
+            </a>
+
+            <a
+                href="#signals"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-tower-broadcast"></i>
+                <span>Emerging Signals</span>
+            </a>
+
+            <a
+                href="#hotspots"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Hotspots / Map</span>
+            </a>
+
+            <a
+                href="#analytics"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a
+                href="#emergency"
+                class="nav-link emergency-link"
+            >
+                <i class="fa-solid fa-truck-medical"></i>
+                <span>Emergency Assistance</span>
+            </a>
+
+            <a
+                href="#blood"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-droplet"></i>
+                <span>Blood Assistance</span>
+            </a>
+
+            <a
+                href="#night"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-moon"></i>
+                <span>Night Help</span>
+            </a>
+
+            <a
+                href="#women"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-shield-heart"></i>
+                <span>Women Safety</span>
+            </a>
+
+            <a
+                href="#roads"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-road"></i>
+                <span>Road & Infrastructure</span>
+            </a>
+
+            <a
+                href="#civic"
+                class="nav-link"
+            >
+                <i class="fa-solid fa-city"></i>
+                <span>Civic Complaints</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-city-art">
+                <div class="city-building b1"></div>
+                <div class="city-building b2"></div>
+                <div class="city-building b3"></div>
+                <div class="city-building b4"></div>
+                <div class="city-building b5"></div>
+            </div>
+
+            <div class="sidebar-message">
+                <strong>Together we build</strong>
+                <span>safer communities</span>
+                <b>♥</b>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="welcome">
+
+                <h1>
+                    Good Morning, Santanu
+                    <span>👋</span>
+                </h1>
+
+                <p>
+                    Community intelligence at a glance.
+                    Real-time insights, safer communities.
+                </p>
+
+            </div>
+
+
+            <div class="top-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    id="globalSearch"
+                    type="text"
+                    placeholder="Search reports, locations, categories..."
+                >
+
+                <kbd>Ctrl + K</kbd>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <button class="top-icon">
+                    <i class="fa-regular fa-bell"></i>
+                    <b>3</b>
+                </button>
+
+                <button class="top-icon">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        SD
+                    </div>
+
+                    <div>
+                        <strong>Santanu Dhibar</strong>
+                        <span>Student / Admin</span>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section
+            class="dashboard-section"
+            id="dashboard"
+        >
+
+            <!-- KPI ROW -->
+
+            <div class="kpi-grid">
+
+                <article class="kpi-card blue">
+
+                    <div class="kpi-icon">
+                        <i class="fa-regular fa-file-lines"></i>
+                    </div>
+
+                    <div class="kpi-data">
+
+                        <span>Total Reports</span>
+
+                        <strong id="totalReports">
+                            30,000
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            AI monitored
+                        </small>
+
+                    </div>
+
+                    <div class="sparkline blue-line">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="kpi-card red">
+
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+
+                    <div class="kpi-data">
+
+                        <span>High Priority</span>
+
+                        <strong id="highPriority">
+                            0
+                        </strong>
+
+                        <small>
+                            Needs attention
+                        </small>
+
+                    </div>
+
+                    <div class="sparkline red-line">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="kpi-card green">
+
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <div class="kpi-data">
+
+                        <span>Resolved</span>
+
+                        <strong id="resolvedReports">
+                            24,563
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            Community resolved
+                        </small>
+
+                    </div>
+
+                    <div class="sparkline green-line">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                        <span></span>
+                    </div>
+
+                </article>
+
+
+                <article class="kpi-card purple">
+
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+
+                    <div class="kpi-data">
+
+                        <span>AI Model Accuracy</span>
+
+                        <strong id="aiAccuracy">
+                            83.98%
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            Classification model
+                        </small>
+
+                    </div>
+
+                    <div class="sparkline purple-line">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                        <span></span>
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURE ROW
+            ================================================== -->
+
+            <div class="feature-grid">
+
+                <!-- REPORT -->
+
+                <article
+                    class="dashboard-card report-card"
+                    id="report"
+                >
+
+                    <div class="card-title">
+
+                        <div>
+                            <span class="eyebrow">
+                                REPORT
+                            </span>
+
+                            <h2>
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Report a Problem
+                            </h2>
+                        </div>
+
+                        <span class="live-pill">
+                            AI ANALYSIS
+                        </span>
+
+                    </div>
+
+
+                    <p class="card-description">
+                        See something? Report it.
+                        Help your community.
+                    </p>
+
+
+                    <form id="reportForm">
+
+                        <label>
+                            Problem description
+                        </label>
+
+                        <textarea
+                            id="reportText"
+                            maxlength="1000"
+                            placeholder="Example: Water supply has been unavailable since morning..."
+                        ></textarea>
+
+
+                        <div class="report-form-row">
+
+                            <div>
+
+                                <label>
+                                    Location
+                                </label>
+
+                                <input
+                                    id="reportLocation"
+                                    type="text"
+                                    placeholder="Area / locality"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label>
+                                    Priority
+                                </label>
+
+                                <select id="reportPriority">
+
+                                    <option value="Normal">
+                                        Normal
+                                    </option>
+
+                                    <option value="High">
+                                        High
+                                    </option>
+
+                                    <option value="Critical">
+                                        Critical
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="primary-button"
+                            type="submit"
+                        >
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            Analyze & Submit
+                        </button>
+
+                    </form>
+
+
+                    <div
+                        class="prediction-box"
+                        id="predictionBox"
+                    >
+
+                        <i class="fa-solid fa-robot"></i>
+
+                        <span>
+                            AI prediction will appear here
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- AI INTELLIGENCE -->
+
+                <article
+                    class="dashboard-card intelligence-card"
+                    id="intelligence"
+                >
+
+                    <div class="card-title">
+
+                        <div>
+                            <span class="eyebrow">
+                                AI ENGINE
+                            </span>
+
+                            <h2>
+                                <i class="fa-solid fa-microchip"></i>
+                                AI Community Intelligence
+                            </h2>
+                        </div>
+
+                        <span class="live-pill green">
+                            LIVE
+                        </span>
+
+                    </div>
+
+
+                    <p class="card-description">
+                        Analyzing patterns, detecting risks,
+                        spotting emerging issues.
+                    </p>
+
+
+                    <div class="ai-visual">
+
+                        <div class="brain-glow">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+                        <div class="orbit orbit-3"></div>
+
+                        <span class="ai-node n1"></span>
+                        <span class="ai-node n2"></span>
+                        <span class="ai-node n3"></span>
+                        <span class="ai-node n4"></span>
+
+                    </div>
+
+
+                    <div class="ai-items">
+
+                        <div class="ai-item">
+
+                            <span class="ai-item-icon blue">
+                                <i class="fa-solid fa-tags"></i>
+                            </span>
+
+                            <div>
+                                <strong>Classification</strong>
+                                <small>AI Problem Detection</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="ai-item">
+
+                            <span class="ai-item-icon green">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+
+                            <div>
+                                <strong>Hotspots</strong>
+                                <small>Geographic Clusters</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="ai-item">
+
+                            <span class="ai-item-icon yellow">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </span>
+
+                            <div>
+                                <strong>Trends</strong>
+                                <small>Community Changes</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EMERGENCY -->
+
+                <article
+                    class="dashboard-card emergency-card"
+                    id="emergency"
+                >
+
+                    <div class="card-title">
+
+                        <div>
+                            <span class="eyebrow">
+                                URGENT SUPPORT
+                            </span>
+
+                            <h2>
+                                <i class="fa-solid fa-truck-medical"></i>
+                                Emergency Assistance
+                            </h2>
+                        </div>
+
+                    </div>
+
+
+                    <p class="card-description">
+                        Need help now?
+                        Connect with emergency services
+                        and support.
+                    </p>
+
+
+                    <div class="emergency-image">
+
+                        <div class="emergency-light red-light"></div>
+                        <div class="emergency-light blue-light"></div>
+
+                        <div class="ambulance">
+                            <i class="fa-solid fa-truck-medical"></i>
+                        </div>
+
+                        <div class="emergency-cross">
+                            +
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="danger-button"
+                        id="emergencyOpen"
+                    >
+                        Get Help
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </article>
+
+            </div>
+
+
+            <!-- =================================================
+                 SIGNALS / MAP / CATEGORY
+            ================================================== -->
+
+            <div class="middle-grid">
+
+                <!-- SIGNALS -->
+
+                <article
+                    class="dashboard-card signals-card"
+                    id="signals"
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+                            <span class="eyebrow">
+                                EARLY WARNING
+                            </span>
+
+                            <h2>
+                                <i class="fa-solid fa-tower-broadcast"></i>
+                                Emerging Signals
+                            </h2>
+                        </div>
+
+                        <button class="view-all">
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="signal-list"
+                        id="signalList"
+                    >
+
+                        <div class="loading">
+                            Loading signals...
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- MAP -->
+
+                <article
+                    class="dashboard-card map-card"
+                    id="hotspots"
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+                            <span class="eyebrow">
+                                GEOGRAPHIC INTELLIGENCE
+                            </span>
+
+                            <h2>
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                Community Problem Map
+                            </h2>
+                        </div>
+
+                        <button class="view-all">
+                            View Full Map
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="fake-map">
+
+                        <div class="map-grid"></div>
+
+                        <div class="map-road road-a"></div>
+                        <div class="map-road road-b"></div>
+                        <div class="map-road road-c"></div>
+                        <div class="map-road road-d"></div>
+
+                        <span class="map-label label-a">
+                            Asansol
+                        </span>
+
+                        <span class="map-label label-b">
+                            Barakar
+                        </span>
+
+                        <span class="map-label label-c">
+                            Kalyaneswari
+                        </span>
+
+                        <span class="heat-point hp1"></span>
+                        <span class="heat-point hp2"></span>
+                        <span class="heat-point hp3"></span>
+                        <span class="heat-point hp4"></span>
+                        <span class="heat-point hp5"></span>
+
+                        <div class="map-marker">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+
+                        <div class="map-controls">
+                            <button>+</button>
+                            <button>−</button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="map-legend">
+
+                        <span>
+                            <i class="red"></i>
+                            High Risk
+                        </span>
+
+                        <span>
+                            <i class="yellow"></i>
+                            Medium Risk
+                        </span>
+
+                        <span>
+                            <i class="green"></i>
+                            Low Risk
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CATEGORIES -->
+
+                <article class="dashboard-card categories-card">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                ANALYTICS
+                            </span>
+
+                            <h2>
+                                Top Problem Categories
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="category-list"
+                        id="categoryList"
+                    >
+
+                        <div class="category-row">
+                            <div class="category-name">
+                                Road & Infrastructure
+                            </div>
+
+                            <div class="category-bar">
+                                <span style="width:90%"></span>
+                            </div>
+
+                            <b>5,972</b>
+                        </div>
+
+
+                        <div class="category-row">
+                            <div class="category-name">
+                                Civic Complaints
+                            </div>
+
+                            <div class="category-bar purple">
+                                <span style="width:76%"></span>
+                            </div>
+
+                            <b>4,758</b>
+                        </div>
+
+
+                        <div class="category-row">
+                            <div class="category-name">
+                                Noise
+                            </div>
+
+                            <div class="category-bar">
+                                <span style="width:64%"></span>
+                            </div>
+
+                            <b>3,421</b>
+                        </div>
+
+
+                        <div class="category-row">
+                            <div class="category-name">
+                                Water & Sanitation
+                            </div>
+
+                            <div class="category-bar green">
+                                <span style="width:58%"></span>
+                            </div>
+
+                            <b>2,966</b>
+                        </div>
+
+
+                        <div class="category-row">
+                            <div class="category-name">
+                                Illegal Parking
+                            </div>
+
+                            <div class="category-bar orange">
+                                <span style="width:48%"></span>
+                            </div>
+
+                            <b>2,412</b>
+                        </div>
+
+
+                        <div class="category-row">
+                            <div class="category-name">
+                                Other
+                            </div>
+
+                            <div class="category-bar gray">
+                                <span style="width:32%"></span>
+                            </div>
+
+                            <b>10,531</b>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- AI INSIGHTS -->
+
+                <article class="dashboard-card insights-card">
+
+                    <div class="section-heading">
+
+                        <h2>
+                            <i class="fa-solid fa-sparkles"></i>
+                            AI Insights
+                        </h2>
+
+                        <button class="view-all">
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="insight">
+
+                        <span class="insight-icon red">
+                            <i class="fa-solid fa-droplet"></i>
+                        </span>
+
+                        <div>
+                            <strong>
+                                Unusual increase in water-related complaints
+                            </strong>
+
+                            <small>
+                                Multiple areas showing rising signals.
+                            </small>
+                        </div>
+
+                        <b class="risk high">
+                            High
+                        </b>
+
+                    </div>
+
+
+                    <div class="insight">
+
+                        <span class="insight-icon yellow">
+                            <i class="fa-solid fa-road"></i>
+                        </span>
+
+                        <div>
+                            <strong>
+                                Road damage reports are increasing
+                            </strong>
+
+                            <small>
+                                Monitor emerging infrastructure hotspots.
+                            </small>
+                        </div>
+
+                        <b class="risk medium">
+                            Medium
+                        </b>
+
+                    </div>
+
+
+                    <div class="insight">
+
+                        <span class="insight-icon green">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </span>
+
+                        <div>
+                            <strong>
+                                Positive trend in community safety
+                            </strong>
+
+                            <small>
+                                Recent safety reports show improvement.
+                            </small>
+                        </div>
+
+                        <b class="risk good">
+                            Good
+                        </b>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- =================================================
+                 ANALYTICS
+            ================================================== -->
+
+            <div
+                class="bottom-grid"
+                id="analytics"
+            >
+
+                <article class="dashboard-card analytics-card">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                PERFORMANCE
+                            </span>
+
+                            <h2>
+                                Analytics Overview
+                            </h2>
+
+                        </div>
+
+                        <div class="range-buttons">
+                            <button>7D</button>
+                            <button class="active">30D</button>
+                            <button>90D</button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="analytics-stats">
+
+                        <div>
+                            <span>Total Reports</span>
+                            <strong id="analyticsTotal">
+                                30,000
+                            </strong>
+                            <small class="positive">
+                                +12%
+                            </small>
+                        </div>
+
+                        <div>
+                            <span>Resolved</span>
+                            <strong id="analyticsResolved">
+                                24,563
+                            </strong>
+                            <small class="positive">
+                                +15%
+                            </small>
+                        </div>
+
+                        <div>
+                            <span>Pending</span>
+                            <strong>
+                                4,437
+                            </strong>
+                            <small class="negative">
+                                -8%
+                            </small>
+                        </div>
+
+                        <div>
+                            <span>High Priority</span>
+                            <strong id="analyticsHigh">
+                                1,842
+                            </strong>
+                            <small class="negative">
+                                +5%
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="line-chart">
+
+                        <svg
+                            viewBox="0 0 700 170"
+                            preserveAspectRatio="none"
+                        >
+
+                            <defs>
+
+                                <linearGradient
+                                    id="chartBlue"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="0%"
+                                        stop-color="#377dff"
+                                        stop-opacity=".28"
+                                    />
+
+                                    <stop
+                                        offset="100%"
+                                        stop-color="#377dff"
+                                        stop-opacity="0"
+                                    />
+                                </linearGradient>
+
+                            </defs>
+
+
+                            <path
+                                class="area"
+                                d="M0 135
+                                C60 122 80 130 120 110
+                                S190 120 225 98
+                                S290 112 330 78
+                                S405 105 450 65
+                                S520 100 560 58
+                                S620 80 700 42
+                                L700 170 L0 170 Z"
+                            />
+
+
+                            <polyline
+                                class="line blue"
+                                points="
+                                0,135
+                                60,122
+                                120,110
+                                180,120
+                                225,98
+                                290,112
+                                330,78
+                                405,105
+                                450,65
+                                520,100
+                                560,58
+                                620,80
+                                700,42
+                                "
+                            />
+
+
+                            <polyline
+                                class="line purple"
+                                points="
+                                0,150
+                                60,140
+                                120,144
+                                180,128
+                                225,140
+                                290,118
+                                330,125
+                                405,104
+                                450,110
+                                520,92
+                                560,101
+                                620,72
+                                700,65
+                                "
+                            />
+
+                        </svg>
+
+                        <div class="chart-labels">
+                            <span>Sep 2</span>
+                            <span>Sep 3</span>
+                            <span>Sep 4</span>
+                            <span>Sep 5</span>
+                            <span>Sep 6</span>
+                            <span>Sep 7</span>
+                            <span>Sep 8</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECENT ACTIVITY -->
+
+                <article class="dashboard-card activity-card">
+
+                    <div class="section-heading">
+
+                        <h2>
+                            Recent Activity
+                        </h2>
+
+                        <button class="view-all">
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="activity-list">
+
+                        <div class="activity-row">
+
+                            <span class="activity-icon red">
+                                <i class="fa-solid fa-road"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    New report submitted
+                                </strong>
+
+                                <small>
+                                    Road damage
+                                </small>
+                            </div>
+
+                            <time>
+                                2 min ago
+                            </time>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <span class="activity-icon green">
+                                <i class="fa-solid fa-check"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Report resolved
+                                </strong>
+
+                                <small>
+                                    Illegal parking
+                                </small>
+                            </div>
+
+                            <time>
+                                12 min ago
+                            </time>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <span class="activity-icon orange">
+                                <i class="fa-solid fa-droplet"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    New high priority
+                                </strong>
+
+                                <small>
+                                    Water supply issue
+                                </small>
+                            </div>
+
+                            <time>
+                                24 min ago
+                            </time>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <span class="activity-icon purple">
+                                <i class="fa-solid fa-brain"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    AI detected emerging signal
+                                </strong>
+
+                                <small>
+                                    Noise pattern
+                                </small>
+                            </div>
+
+                            <time>
+                                38 min ago
+                            </time>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <span class="activity-icon blue">
+                                <i class="fa-solid fa-droplet"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Community support request
+                                </strong>
+
+                                <small>
+                                    Blood needed
+                                </small>
+                            </div>
+
+                            <time>
+                                1 hour ago
+                            </time>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- STRONGER TOGETHER -->
+
+                <article class="dashboard-card together-card">
+
+                    <div class="together-image">
+
+                        <div class="sun"></div>
+
+                        <div class="mountain m1"></div>
+                        <div class="mountain m2"></div>
+                        <div class="mountain m3"></div>
+
+                    </div>
+
+                    <div class="together-content">
+
+                        <span class="eyebrow">
+                            COMMUNITY
+                        </span>
+
+                        <h2>
+                            Stronger<br>
+                            Together
+                        </h2>
+
+                        <p>
+                            Real people. Real reports.
+                            Real change.
+                        </p>
+
+                        <button
+                            class="primary-button small"
+                            id="differenceButton"
+                        >
+                            Make a Difference
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="together-stats">
+
+                        <div>
+                            <strong>
+                                10K+
+                            </strong>
+                            <span>Active Users</span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                30K+
+                            </strong>
+                            <span>Reports</span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                100+
+                            </strong>
+                            <span>Communities</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <footer>
+                CommunitySignal AI
+                <span>•</span>
+                AI-powered community intelligence
+                <span>•</span>
+                Prototype / FSP Project
+            </footer>
+
+        </section>
+
+
+        <!-- =================================================
+             SUPPORT SECTIONS
+        ================================================== -->
+
+        <section
+            class="hidden-section"
+            id="blood"
+        >
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">COMMUNITY SUPPORT</span>
+                    <h2>Blood Assistance</h2>
+                </div>
+            </div>
+
+            <div class="support-panel">
+
+                <i class="fa-solid fa-droplet support-large-icon"></i>
+
+                <h2>
+                    Blood Assistance
+                </h2>
+
+                <p>
+                    Request or offer blood assistance
+                    through the community support system.
+                </p>
+
+                <div class="support-form">
+
+                    <select id="bloodGroup">
+                        <option value="">Blood Group</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                    </select>
+
+                    <input
+                        id="bloodArea"
+                        placeholder="Hospital / Area"
+                    >
+
+                    <button
+                        class="primary-button"
+                        id="bloodSubmit"
+                    >
+                        Submit Request
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section
+            class="hidden-section"
+            id="night"
+        >
+
+            <div class="support-panel">
+
+                <i class="fa-solid fa-moon support-large-icon yellow"></i>
+
+                <h2>
+                    Night Help
+                </h2>
+
+                <p>
+                    Safer travel and community assistance
+                    during late hours.
+                </p>
+
+                <button class="primary-button">
+                    Find Support
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section
+            class="hidden-section"
+            id="women"
+        >
+
+            <div class="support-panel">
+
+                <i class="fa-solid fa-shield-heart support-large-icon purple"></i>
+
+                <h2>
+                    Women Safety
+                </h2>
+
+                <p>
+                    Quick access to configured safety
+                    and emergency assistance.
+                </p>
+
+                <button
+                    class="danger-button"
+                    id="womenEmergency"
+                >
+                    Open Emergency Assistance
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section
+            class="hidden-section"
+            id="roads"
+        >
+
+            <div class="support-panel">
+
+                <i class="fa-solid fa-road support-large-icon"></i>
+
+                <h2>
+                    Road & Infrastructure
+                </h2>
+
+                <p>
+                    Report potholes, damaged roads,
+                    drainage and infrastructure problems.
+                </p>
+
+                <button
+                    class="primary-button"
+                    id="roadReport"
+                >
+                    Report Road Problem
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section
+            class="hidden-section"
+            id="civic"
+        >
+
+            <div class="support-panel">
+
+                <i class="fa-solid fa-city support-large-icon"></i>
+
+                <h2>
+                    Civic Complaints
+                </h2>
+
+                <p>
+                    Water, noise, sanitation, parking
+                    and other community complaints.
+                </p>
+
+                <button
+                    class="primary-button"
+                    id="civicReport"
+                >
+                    Create Civic Report
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         RIGHT EMERGENCY RAIL
+    ====================================================== -->
+
+    <aside class="right-rail">
+
+        <div class="rail-card emergency-rail">
+
+            <div class="rail-status">
+                <span></span>
+                EMERGENCY READY
+            </div>
+
+            <div class="emergency-symbol">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <h2>
+                Emergency
+            </h2>
+
+            <p>
+                Quick access to configured
+                emergency services.
+            </p>
+
+
+            <div class="quick-services">
+
+                <button
+                    data-emergency="police"
+                    class="quick-service"
+                >
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <span>
+                        <strong>Police</strong>
+                        <small>112</small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    data-emergency="ambulance"
+                    class="quick-service"
+                >
+                    <i class="fa-solid fa-truck-medical"></i>
+
+                    <span>
+                        <strong>Ambulance</strong>
+                        <small>102</small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    data-emergency="fire"
+                    class="quick-service"
+                >
+                    <i class="fa-solid fa-fire-extinguisher"></i>
+
+                    <span>
+                        <strong>Fire</strong>
+                        <small>101</small>
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="rail-emergency-button"
+                id="railEmergency"
+            >
+                <i class="fa-solid fa-phone"></i>
+                Emergency Help
+            </button>
+
+            <small class="rail-note">
+                Verify local emergency numbers before deployment.
+            </small>
+
+        </div>
+
+
+        <div class="rail-card signals-rail">
+
+            <div class="rail-heading">
+                <h3>
+                    <i class="fa-solid fa-tower-broadcast"></i>
+                    Emerging Signals
+                </h3>
+
+                <span>
+                    Live
+                </span>
+            </div>
+
+
+            <div
+                class="rail-signal-list"
+                id="railSignals"
+            >
+
+                <div class="rail-signal">
+                    <i class="fa-solid fa-droplet"></i>
+
+                    <div>
+                        <strong>
+                            Water Supply Issues
+                        </strong>
+
+                        <small>
+                            Increasing in 3 areas
+                        </small>
+                    </div>
+
+                    <b class="high">
+                        HIGH
+                    </b>
+                </div>
+
+
+                <div class="rail-signal">
+                    <i class="fa-solid fa-volume-high"></i>
+
+                    <div>
+                        <strong>
+                            Noise Pollution
+                        </strong>
+
+                        <small>
+                            Rising complaints
+                        </small>
+                    </div>
+
+                    <b class="medium">
+                        MEDIUM
+                    </b>
+                </div>
+
+
+                <div class="rail-signal">
+                    <i class="fa-solid fa-road"></i>
+
+                    <div>
+                        <strong>
+                            Road Damage
+                        </strong>
+
+                        <small>
+                            New pattern detected
+                        </small>
+                    </div>
+
+                    <b class="medium">
+                        MEDIUM
+                    </b>
+                </div>
+
+
+                <div class="rail-signal">
+                    <i class="fa-solid fa-trash"></i>
+
+                    <div>
+                        <strong>
+                            Illegal Dumping
+                        </strong>
+
+                        <small>
+                            Growing trend
+                        </small>
+                    </div>
+
+                    <b class="low">
+                        LOW
+                    </b>
+                </div>
+
+
+                <div class="rail-signal">
+                    <i class="fa-solid fa-bolt"></i>
+
+                    <div>
+                        <strong>
+                            Power Outage
+                        </strong>
+
+                        <small>
+                            Unusual activity
+                        </small>
+                    </div>
+
+                    <b class="low">
+                        LOW
+                    </b>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="rail-card community-card">
+
+            <div class="community-image">
+
+                <div class="community-sun"></div>
+
+                <div class="community-mountain cm1"></div>
+                <div class="community-mountain cm2"></div>
+
+            </div>
+
+            <div class="community-copy">
+
+                <span class="eyebrow">
+                    TOGETHER
+                </span>
+
+                <h2>
+                    Stronger Together
+                </h2>
+
+                <p>
+                    Your voice helps build
+                    a safer tomorrow.
+                </p>
+
+                <button
+                    class="primary-button small"
+                    id="communityAction"
+                >
+                    Make a Difference
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- =========================================================
+     EMERGENCY MODAL
+========================================================== -->
+
+<div
+    class="modal-backdrop"
+    id="emergencyModal"
+>
+
+    <div class="modal">
+
+        <button
+            class="modal-close"
+            id="closeEmergency"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-emergency-icon">
+            <i class="fa-solid fa-truck-medical"></i>
+        </div>
+
+        <span class="eyebrow">
+            EMERGENCY ASSISTANCE
+        </span>
+
+        <h2>
+            Choose a service
+        </h2>
+
+        <p>
+            Select the emergency service you need.
+            The call action uses the configured number.
+        </p>
+
+
+        <div class="modal-services">
+
+            <button data-emergency="ambulance">
+                <i class="fa-solid fa-truck-medical"></i>
+                <strong>Ambulance</strong>
+                <span>102</span>
+            </button>
+
+            <button data-emergency="fire">
+                <i class="fa-solid fa-fire-extinguisher"></i>
+                <strong>Fire</strong>
+                <span>101</span>
+            </button>
+
+            <button data-emergency="police">
+                <i class="fa-solid fa-shield-halved"></i>
+                <strong>Police</strong>
+                <span>112</span>
+            </button>
+
+            <button data-emergency="general">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <strong>General Emergency</strong>
+                <span>112</span>
+            </button>
+
+        </div>
+
+        <small class="modal-warning">
+            Verify emergency contacts for the actual deployment
+            location before public use.
+        </small>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='app.js') }}"
+></script>
+
+</body>
+</html>

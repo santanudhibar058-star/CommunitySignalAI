@@ -1,0 +1,94 @@
+.jarvis-core {
+  --jarvis-cyan: #54e9ff;
+  --jarvis-blue: #168be7;
+  --jarvis-violet: #9a7bff;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(var(--jarvis-size, 240px), 100%);
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  overflow: visible;
+  isolation: isolate;
+  color: var(--jarvis-cyan);
+  contain: layout paint style;
+}
+
+.jarvis-hud { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 8px rgba(48, 210, 250, .1)); }
+.jarvis-halo { position: absolute; width: 67%; aspect-ratio: 1; border-radius: 50%; pointer-events: none; }
+.jarvis-halo-back { background: radial-gradient(circle, rgba(39, 205, 255, .2), rgba(37, 111, 243, .08) 44%, transparent 72%); filter: blur(13px); animation: jarvis-halo-breathe 4.8s ease-in-out infinite; }
+.jarvis-ring { transform-box: view-box; transform-origin: center; }
+.jarvis-ring-outer { animation: jarvis-rotate 38s linear infinite; }
+.jarvis-ring-middle { animation: jarvis-rotate-reverse 25s linear infinite; }
+.jarvis-ring-inner { animation: jarvis-rotate 17s linear infinite; }
+.jarvis-track { fill: none; stroke: rgba(71, 181, 229, .17); stroke-width: .75; }
+.jarvis-arc { fill: none; stroke: var(--jarvis-arc-paint); stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(66, 220, 255, .9)); }
+.arc-long { stroke-width: 2; stroke-dasharray: 154 765; stroke-dashoffset: 36; }
+.arc-short { stroke-width: 1; stroke-dasharray: 28 765; stroke-dashoffset: -270; opacity: .58; }
+.arc-middle { stroke-width: 1.35; stroke-dasharray: 198 741; stroke-dashoffset: -390; opacity: .9; }
+.arc-inner { stroke-width: 2; stroke-dasharray: 82 559; }
+.arc-inner-reverse { stroke-dashoffset: 210; opacity: .55; }
+.jarvis-tick { stroke: rgba(86, 177, 230, .3); stroke-width: 1; }
+.jarvis-tick.major { stroke: rgba(104, 219, 255, .8); stroke-width: 1.7; }
+.jarvis-node { fill: #b7fbff; filter: drop-shadow(0 0 4px #21c8ff); }
+.node-violet, .particle-violet { fill: var(--jarvis-violet); filter: drop-shadow(0 0 4px #8f71ff); }
+.jarvis-crosshair { fill: none; stroke: rgba(116, 211, 245, .48); stroke-width: 1.1; stroke-linecap: round; }
+.jarvis-particle { fill: #85f1ff; opacity: .55; transform-box: fill-box; transform-origin: center; animation: jarvis-particle-flicker 2.9s ease-in-out infinite alternate; animation-delay: var(--particle-delay, 0s); }
+.jarvis-core-aura { fill: rgba(24, 190, 244, .16); animation: jarvis-core-pulse 3.4s ease-in-out infinite; }
+.jarvis-core-shell { fill: rgba(4, 22, 43, .96); stroke: rgba(131, 239, 255, .72); stroke-width: 1.4; filter: drop-shadow(0 0 12px rgba(25, 207, 250, .76)); }
+.jarvis-core-light { opacity: .93; animation: jarvis-core-pulse 3.4s ease-in-out infinite; }
+.jarvis-core-inner { fill: rgba(9, 42, 70, .46); stroke: rgba(219, 255, 255, .75); stroke-width: 1; }
+.jarvis-core-glyph { fill: rgba(119, 241, 255, .16); stroke: rgba(225, 255, 255, .92); stroke-width: 1.4; }
+.jarvis-core-lines { fill: none; stroke: rgba(239, 255, 255, .84); stroke-width: .85; }
+.jarvis-core-point { fill: #fff; filter: drop-shadow(0 0 4px white); }
+.jarvis-orbit { position: absolute; inset: 18%; border: 1px solid rgba(76, 210, 250, .2); border-radius: 50%; transform: rotateX(66deg) rotate(-28deg); pointer-events: none; }
+.jarvis-orbit i { position: absolute; top: 50%; left: -3px; width: 6px; height: 6px; border-radius: 50%; background: #9ef8ff; box-shadow: 0 0 10px #19c5ff; }
+.orbit-a { animation: jarvis-orbit-a 13s linear infinite; }
+.orbit-b { inset: 28%; transform: rotateY(66deg) rotate(24deg); border-color: rgba(154, 123, 255, .27); animation: jarvis-orbit-b 19s linear infinite reverse; }
+.orbit-b i { background: #b6a5ff; box-shadow: 0 0 10px #8166ff; }
+.jarvis-energy-wave { position: absolute; inset: 28%; border: 1px solid rgba(61, 228, 255, .16); border-radius: 50%; opacity: 0; transform: scale(.8); pointer-events: none; }
+.jarvis-readout { position: absolute; bottom: -2%; display: grid; gap: 3px; color: rgba(144, 200, 230, .68); font-size: clamp(7px, 1.8vw, 9px); font-weight: 700; letter-spacing: .22em; text-align: center; white-space: nowrap; }
+.jarvis-readout b { color: #8df7ff; }
+.jarvis-readout strong { color: #71dff6; font-size: .9em; letter-spacing: .18em; }
+.jarvis-core-compact { width: min(var(--jarvis-size, 48px), 100%); }
+
+.jarvis-core[data-state="listening"] .jarvis-ring-outer,
+.jarvis-core[data-state="listening"] .jarvis-ring-middle { animation-duration: 9s; }
+.jarvis-core[data-state="listening"] .jarvis-core-aura,
+.jarvis-core[data-state="listening"] .jarvis-core-light { animation-duration: 1.25s; }
+.jarvis-core[data-state="listening"] .jarvis-energy-wave { animation: jarvis-wave 1.7s ease-out infinite; }
+.jarvis-core[data-state="thinking"] .jarvis-ring-outer { animation-duration: 5.5s; }
+.jarvis-core[data-state="thinking"] .jarvis-ring-middle { animation-duration: 4.2s; }
+.jarvis-core[data-state="thinking"] .jarvis-ring-inner { animation-duration: 3s; }
+.jarvis-core[data-state="thinking"] .jarvis-particle { animation-duration: .7s; opacity: .9; }
+.jarvis-core[data-state="thinking"] .jarvis-core-light { animation-duration: .9s; }
+.jarvis-core[data-state="speaking"] .jarvis-core-aura,
+.jarvis-core[data-state="speaking"] .jarvis-core-light { animation-duration: .48s; }
+.jarvis-core[data-state="speaking"] .jarvis-ring-outer { animation-duration: 14s; }
+.jarvis-core[data-state="speaking"] .jarvis-energy-wave { animation: jarvis-wave .9s ease-out infinite; }
+.jarvis-core[data-state="success"] .jarvis-core-shell { stroke: rgba(133, 255, 224, .9); filter: drop-shadow(0 0 16px rgba(65, 255, 196, .78)); }
+.jarvis-core[data-state="success"] .jarvis-core-light { filter: hue-rotate(30deg) saturate(.8); }
+.jarvis-core[data-state="error"] { --jarvis-cyan: #ffb275; }
+.jarvis-core[data-state="error"] .jarvis-arc { stroke: #ffb275; filter: drop-shadow(0 0 4px rgba(255, 144, 79, .85)); }
+.jarvis-core[data-state="error"] .jarvis-core-shell { stroke: rgba(255, 183, 125, .88); filter: drop-shadow(0 0 12px rgba(255, 132, 74, .7)); }
+.jarvis-core[data-state="error"] .jarvis-energy-wave { border-color: rgba(255, 164, 110, .4); opacity: .7; }
+
+@keyframes jarvis-rotate { to { transform: rotate(360deg); } }
+@keyframes jarvis-rotate-reverse { to { transform: rotate(-360deg); } }
+@keyframes jarvis-orbit-a { to { transform: rotateX(66deg) rotate(332deg); } }
+@keyframes jarvis-orbit-b { to { transform: rotateY(66deg) rotate(384deg); } }
+@keyframes jarvis-halo-breathe { 0%, 100% { opacity: .62; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes jarvis-core-pulse { 0%, 100% { opacity: .76; transform: scale(.96); } 50% { opacity: 1; transform: scale(1.045); } }
+@keyframes jarvis-particle-flicker { from { opacity: .24; transform: scale(.65); } to { opacity: .9; transform: scale(1.35); } }
+@keyframes jarvis-wave { 0% { opacity: .65; transform: scale(.7); } 100% { opacity: 0; transform: scale(1.85); } }
+
+@media (max-width: 700px) {
+  .jarvis-orbit { inset: 22%; }
+  .orbit-b { inset: 30%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jarvis-core *, .jarvis-core::before, .jarvis-core::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .jarvis-core[data-state="listening"] .jarvis-energy-wave,
+  .jarvis-core[data-state="speaking"] .jarvis-energy-wave { opacity: .45; transform: scale(1); }
+}
