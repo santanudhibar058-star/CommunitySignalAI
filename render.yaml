@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://render.com/schema/render.yaml.json
+# This repository stores the application under communitysignalai/.
+services:
+  - type: web
+    name: peoplecareai-santanu-web
+    runtime: static
+    rootDir: communitysignalai/frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: "22.15.0"
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: peoplecareai-santanu-api
+          envVarKey: RENDER_EXTERNAL_URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  - type: web
+    name: peoplecareai-santanu-api
+    runtime: python
+    region: singapore
+    plan: free
+    rootDir: communitysignalai
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --chdir app --worker-class gthread --workers 1 --threads 4 --timeout 120 app:app --bind 0.0.0.0:$PORT
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.3"
+      - key: PEOPLECARE_ENV
+        value: production
+      - key: PEOPLECARE_HOST
+        value: 0.0.0.0
+      - key: PEOPLECARE_DEBUG
+        value: "false"
+      - key: PEOPLECARE_ADMIN_DEV_BYPASS
+        value: "false"
+      - key: PEOPLECARE_PROVIDER
+        value: openai_compatible
+      - key: PEOPLECARE_API_BASE
+        value: https://api.openai.com/v1
+      - key: PEOPLECARE_MODEL
+        value: gpt-4o-mini
+      - key: PEOPLECARE_OLLAMA_PRELOAD
+        value: "false"
+      - key: PEOPLECARE_ADMIN_PASSWORD
+        sync: false
+      - key: PEOPLECARE_CORS_ORIGINS
+        fromService:
+          type: web
+          name: peoplecareai-santanu-web
+          envVarKey: RENDER_EXTERNAL_URL

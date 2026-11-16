@@ -49,7 +49,11 @@ SIGNALS_PATH = BASE_DIR / "outputs" / "community_signal_results.csv"
 RAW_DATA_PATH = BASE_DIR / "data" / "raw_nyc311.csv"
 CLEAN_DATA_PATH = BASE_DIR / "data" / "cleaned_nyc311.csv"
 
-REPORTS_PATH = BASE_DIR / "outputs" / "community_reports.csv"
+# Keep mutable user/admin records on the project outputs directory by default.
+# Production can point this at a persistent mount (for example /var/data) without
+# moving the read-only model, dataset, or precomputed signal artifacts.
+DATA_DIR = Path(os.getenv("PEOPLECARE_DATA_DIR", "").strip() or (BASE_DIR / "outputs")).expanduser().resolve()
+REPORTS_PATH = DATA_DIR / "community_reports.csv"
 REPORTS_LOCK = threading.RLock()
 VALID_REPORT_STATUSES = {"Pending", "Under Review", "Assigned", "In Progress", "Resolved", "Rejected"}
 VALID_REPORT_PRIORITIES = {"Low", "Normal", "Medium", "High", "Urgent", "Critical"}
@@ -59,10 +63,10 @@ ADMIN_PASSWORD = (
 )
 ADMIN_DEV_BYPASS = os.getenv("PEOPLECARE_ADMIN_DEV_BYPASS", "false").strip().lower() in {"1", "true", "yes", "on"}
 ADMIN_CONFIGURED_HOST = os.getenv("PEOPLECARE_HOST", "127.0.0.1").strip().lower()
-ADMIN_AUDIT_PATH = BASE_DIR / "outputs" / "admin_audit.jsonl"
+ADMIN_AUDIT_PATH = DATA_DIR / "admin_audit.jsonl"
 ADMIN_AUDIT_LOCK = threading.Lock()
-ADMIN_NOTIFICATIONS_PATH = BASE_DIR / "outputs" / "admin_notifications.json"
-ADMIN_PUSH_SUBSCRIPTIONS_PATH = BASE_DIR / "outputs" / "admin_push_subscriptions.json"
+ADMIN_NOTIFICATIONS_PATH = DATA_DIR / "admin_notifications.json"
+ADMIN_PUSH_SUBSCRIPTIONS_PATH = DATA_DIR / "admin_push_subscriptions.json"
 ADMIN_NOTIFICATION_LOCK = threading.RLock()
 ADMIN_PUSH_LOCK = threading.RLock()
 ACTIVITY_RATE_LOCK = threading.Lock()
