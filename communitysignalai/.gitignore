@@ -2,15 +2,27 @@
 .env
 .env.*
 !.env.example
+**/.env
+**/.env.*
+!**/.env.example
 *.pem
 *.key
 .venv/
 venv/
 __pycache__/
+**/__pycache__/
 *.py[cod]
-# frontend
+# Frontend / Android dependencies and generated build output
 frontend/node_modules/
 frontend/dist/
+android-app/node_modules/
+android-app/dist/
+**/node_modules/
+**/dist/
+**/.vercel/
+**/.vite/
+*.log
+npm-debug.log*
 # generated/local data (keep tracked sample files if needed)
 .DS_Store
 Thumbs.db

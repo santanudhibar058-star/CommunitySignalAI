@@ -1,0 +1,45 @@
+# Never publish local credentials or environment files.
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python build/runtime files.
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+ENV/
+
+# JavaScript dependencies/build output and local deployment state.
+**/node_modules/
+**/dist/
+**/.vercel/
+**/.vite/
+*.log
+npm-debug.log*
+
+# Private runtime records; keep source data and model artifacts versioned.
+communitysignalai/outputs/community_reports.csv
+communitysignalai/outputs/admin_audit.jsonl
+communitysignalai/outputs/admin_notifications.json
+communitysignalai/outputs/admin_push_subscriptions.json
+
+# Local backups and generated deliverables are kept out of the source repository.
+backup_pre_redesign/
+CommunitySignalAI_FULL_BACKUP/
+CommunitySignalAI_FULL_BACKUP.zip
+PeopleCareAI_Final_Release.zip
+*.pptx
+/models/
+/.agent/
+
+# OS/editor files.
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/

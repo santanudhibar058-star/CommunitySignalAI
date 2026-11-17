@@ -5,9 +5,11 @@ from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 import base64
 import hmac
+import ipaddress
 import json
 import os
 import re
+import socket
 import tempfile
 import time
 import uuid
@@ -460,6 +462,29 @@ def admin_verify():
         "authenticated": True,
         "access_mode": "password" if ADMIN_PASSWORD else "local-demo-bypass",
     })
+
+
+@app.route("/api/admin/phone-link", methods=["GET"])
+def admin_phone_link():
+    """Return private LAN addresses for the authenticated local development UI only."""
+    denied = _admin_required_response()
+    if denied:
+        return denied
+    environment = os.getenv("PEOPLECARE_ENV", "development").strip().lower()
+    if environment not in {"development", "dev", "local"}:
+        return jsonify({"error": "LAN address discovery is available only in local development."}), 404
+
+    addresses = set()
+    try:
+        for result in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET, socket.SOCK_STREAM):
+            address = result[4][0]
+            parsed = ipaddress.ip_address(address)
+            if parsed.is_private and not parsed.is_loopback and not parsed.is_link_local:
+                addresses.add(str(parsed))
+    except (OSError, ValueError):
+        pass
+
+    return jsonify({"addresses": sorted(addresses)})
 
 
 @app.route("/api/admin/audit-logs", methods=["GET"])

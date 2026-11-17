@@ -1,83 +1,137 @@
-# Render deployment
+# Beginner deployment guide: Vercel + Render
 
-This repository contains the application under `communitysignalai/`; the GitHub repository root also contains a short `README.md`. A root-level `render.yaml` provisions the React site and Flask API from that nested project folder.
+This project is split into two services:
 
-## Important data and service limits
+- **Vercel** builds and serves the React/Vite website from `communitysignalai/frontend`.
+- **Render** runs the Flask API from `communitysignalai` using the repository-root `render.yaml`.
 
-The reports, admin notifications, push subscriptions, and audit records are currently CSV/JSON files. Render Free web services have an ephemeral filesystem, so these records are lost on restart, redeploy, or spin-down. Use the Free deployment only as a preview with test data. Do not accept real community reports until the API has durable storage.
+Use the same GitHub repository for both services. The frontend calls the API through the public URL configured as `VITE_API_BASE_URL`.
 
-To keep the existing file-based persistence without changing the app's storage format, use a paid Render web service with a persistent disk mounted at `/var/data`, then set `PEOPLECARE_DATA_DIR=/var/data`. The model, historical datasets, and precomputed signal data remain read from the repository. A database migration is another option, but this project does not currently use a database. Render Free Postgres expires after 30 days, so it is not durable production storage.
+## Before you publish
 
-Free API services also sleep after inactivity and can take about a minute to wake. Use the paid plan if the site needs consistently available responses.
+1. Confirm the newest source and deployment files are on the GitHub `main` branch. This local working folder is not currently connected to a Git checkout, so local changes do not automatically appear on GitHub. Review the changed files in GitHub Desktop before committing.
+2. Never upload `.env`, passwords, API keys, VAPID private keys, `outputs/community_reports.csv`, or personal report data. The root and project `.gitignore` files exclude these. Review the GitHub changed-files list before publishing.
+3. Create a **new, unique admin password** directly in Render. Do not use a password that has appeared in chat or a local environment file.
+4. Back up any private local reports separately. The deployed service does not import or migrate local report files.
 
-## Create both services from the Blueprint
+## Important: free Render is only a preview
 
-1. Push the repository with the root `render.yaml` to GitHub.
-2. In Render, choose **New → Blueprint**, connect `santanudhibar058-star/CommunitySignalAI`, and select its default branch.
-3. Review the two services. The Blueprint sets both compute services to Free for preview use and links the frontend API URL and backend CORS origin using Render service references.
-4. Set `PEOPLECARE_ADMIN_PASSWORD` in the backend's secret prompt to a new, unique, strong password. Do not reuse a password that has appeared in chat or a local `.env` file.
-5. If you have an OpenAI-compatible provider, set `PEOPLECARE_API_KEY` in the backend Environment page. Without it, the backend will start but cloud chat will report that the provider is not configured; Ollama is not installed or assumed on Render. Set `PEOPLECARE_API_BASE` and `PEOPLECARE_MODEL` if your provider is not OpenAI-compatible at the default endpoint/model.
-6. Apply the Blueprint and wait for the API and static site deploys to finish.
+Render Free web services sleep after 15 minutes without traffic and may take about a minute to wake. Their local filesystem is temporary: report CSVs, notifications, push subscriptions, and audit records can be lost when the service sleeps, restarts, or redeploys. Do not use the free service for real community reports or rely on it as durable admin storage. A persistent Render disk requires a paid service; the current app has not been migrated to a durable database. See [Render's free service limits](https://render.com/docs/free) and [persistent disks](https://render.com/docs/disks).
 
-If the Blueprint's service references cannot resolve in your Render workspace, deploy in this order manually: create the API, copy its public URL into the static site's `VITE_API_BASE_URL`, create the static site, then set the static site's public origin in the API's `PEOPLECARE_CORS_ORIGINS` and redeploy both.
+Vercel's static frontend does not store backend reports. Existing local report files are ignored by Git and will not be deployed.
 
-## Exact service settings
+## Step 1 — Deploy the Flask API on Render
 
-| Setting | Frontend | Backend |
+1. Sign in at [Render](https://dashboard.render.com/) and choose **New → Blueprint**.
+2. Connect `santanudhibar058-star/CommunitySignalAI` and choose the `main` branch.
+3. Render reads the root `render.yaml`. Check that it creates **one Python Web Service**, with:
+
+   | Setting | Value |
+   | --- | --- |
+   | Root directory | `communitysignalai` |
+   | Build command | `pip install -r requirements.txt` |
+   | Start command | `gunicorn --chdir app --bind 0.0.0.0:$PORT --worker-class gthread --workers 1 --threads 4 --timeout 120 app:app` |
+   | Health check | `/api/health` |
+   | Plan | Free preview |
+
+4. Set the `PEOPLECARE_ADMIN_PASSWORD` secret when Render asks. Generate a fresh password and save it in a password manager; do not put it in GitHub or a `VITE_*` variable.
+5. Create the service and wait for the first deploy. Copy its URL, for example `https://peoplecareai-santanu-api.onrender.com`.
+6. Open `<Render URL>/api/health`. It should return JSON with `status: online`, `model_loaded: true`, and `vectorizer_loaded: true`.
+
+The start command changes into `app/` because both `app.py` and its `peoplecare_backend.py` module are stored there. The Flask app resolves datasets and model files from the project root using its absolute file path.
+
+## Step 2 — Deploy the Vite frontend on Vercel
+
+1. Sign in at [Vercel](https://vercel.com/dashboard), choose **Add New → Project**, and import `santanudhibar058-star/CommunitySignalAI`.
+2. Set the project options:
+
+   | Setting | Value |
+   | --- | --- |
+   | Framework preset | Vite |
+   | Root directory | `communitysignalai/frontend` |
+   | Install command | `npm ci` |
+   | Build command | `npm run build` |
+   | Output directory | `dist` |
+   | Node.js version | 22.x |
+
+3. Add this environment variable for **Production** (and Preview too if you want preview deployments to call the same API):
+
+   | Name | Value |
+   | --- | --- |
+   | `VITE_API_BASE_URL` | Render API origin, e.g. `https://peoplecareai-santanu-api.onrender.com` |
+
+   Use the API origin only: no trailing slash and no `/api` suffix. The frontend already adds endpoint paths. This is a public URL, not a secret. Never put an AI key or admin password in a `VITE_*` variable.
+
+4. Deploy and copy the Vercel domain, such as `https://community-signal-ai.vercel.app`.
+5. In Vercel, add or edit `VITE_API_BASE_URL` if needed, then redeploy so the production bundle contains the Render API URL.
+
+`communitysignalai/frontend/vercel.json` includes the SPA rewrite so direct links such as `/admin` still load after a refresh. This follows [Vercel's SPA rewrite guidance](https://vercel.com/docs/project-configuration/vercel-json#rewrites).
+
+## Step 3 — Allow the Vercel origin in Flask CORS
+
+1. In Render, open the API service → **Environment**.
+2. Add:
+
+   | Name | Value |
+   | --- | --- |
+   | `PEOPLECARE_CORS_ORIGINS` | Exact Vercel origin, e.g. `https://community-signal-ai.vercel.app` |
+
+   Enter only the origin (scheme and domain), without a path or trailing slash. If you use a Vercel preview domain, add each trusted preview origin explicitly as a comma-separated value. Do not use `*`.
+
+3. Save and let Render redeploy. Refresh the Vercel page and check the browser console/network panel for CORS errors.
+
+## Backend environment settings
+
+The Blueprint sets these non-secret values:
+
+| Variable | Value | Why |
 | --- | --- | --- |
-| Service type | Static Site | Web Service, Python |
-| Root directory | `communitysignalai/frontend` | `communitysignalai` |
-| Build command | `npm ci && npm run build` | `pip install -r requirements.txt` |
-| Publish directory | `dist` | — |
-| Start command | — | `gunicorn --chdir app --worker-class gthread --workers 1 --threads 4 --timeout 120 app:app --bind 0.0.0.0:$PORT` |
-| Health check | — | `/api/health` |
-| Rewrite | `/*` → `/index.html` | — |
+| `PEOPLECARE_ENV` | `production` | Production safety behavior |
+| `PEOPLECARE_HOST` | `0.0.0.0` | Service bind configuration |
+| `PEOPLECARE_DEBUG` | `false` | Keep the Flask debugger disabled |
+| `PEOPLECARE_ADMIN_DEV_BYPASS` | `false` | Never bypass admin authentication on a host |
+| `PEOPLECARE_PROVIDER` | `openai_compatible` | Do not expect a local Ollama daemon on Render |
+| `PEOPLECARE_OLLAMA_PRELOAD` | `false` | Avoid trying to start a local model on Render |
+| `PEOPLECARE_ADMIN_PASSWORD` | Set privately in Render | Protects the admin API |
+| `PEOPLECARE_CORS_ORIGINS` | Set after Vercel deploy | Allows the deployed frontend origin |
 
-The single Gunicorn worker keeps the existing process-local CSV/JSON locks coherent. The frontend uses Vite's default `/` asset base and the API helper reads `VITE_API_BASE_URL` at build time. The Vite development proxy remains for local development only.
+### Optional cloud AI
 
-## Environment variables
+Ollama running on your PC is not available inside Render. To use cloud chat, add a supported provider's server-side `PEOPLECARE_API_KEY` in Render → Environment. Configure `PEOPLECARE_API_BASE` and `PEOPLECARE_MODEL` if needed. Without a valid cloud key, general chat must report that its provider is unavailable; ML prediction and the other configured API features can still run. Never add provider credentials to GitHub or Vercel.
 
-### Backend
+### Optional phone push alerts
 
-| Name | Value / purpose |
-| --- | --- |
-| `PEOPLECARE_ENV` | `production` |
-| `PEOPLECARE_HOST` | `0.0.0.0` |
-| `PEOPLECARE_DEBUG` | `false` |
-| `PEOPLECARE_ADMIN_DEV_BYPASS` | `false` |
-| `PEOPLECARE_ADMIN_PASSWORD` | Required. Set a fresh, unique secret in Render; never commit it. |
-| `PEOPLECARE_PROVIDER` | `openai_compatible` so deployment does not try local Ollama. |
-| `PEOPLECARE_API_KEY` | Optional for service startup; required for cloud AI responses. Store only in Render's Environment settings. |
-| `PEOPLECARE_API_BASE` | Optional; default OpenAI API base URL. |
-| `PEOPLECARE_MODEL` | Optional; default model is `gpt-4o-mini`. Use a model enabled for your provider. |
-| `PEOPLECARE_CORS_ORIGINS` | Set by the Blueprint to the frontend's public HTTPS origin. |
-| `PEOPLECARE_DATA_DIR` | Optional; for a paid persistent disk, set to its mount path such as `/var/data`. Do not set this on Free expecting persistence. |
-| `PEOPLECARE_VAPID_PUBLIC_KEY` | Optional; required for phone/browser push alerts. |
-| `PEOPLECARE_VAPID_PRIVATE_KEY_B64` | Optional secret; generate and store only in Render. |
-| `PEOPLECARE_VAPID_SUBJECT` | Optional; e.g. `mailto:admin@example.com`. |
+Web Push needs a VAPID public key, private key, and subject configured on the Flask service. Generate keys locally with `python scripts/generate_vapid_keys.py`, then add the values to Render's environment. Store the private key only in Render. After HTTPS is deployed, open `/admin` on the phone, sign in, enable alerts, and grant browser notification permission. Browser/OS settings control sound and vibration; the site cannot force an alarm.
 
-The model artifacts and NYC 311 reference data are versioned under `models/`, `data/`, and `outputs/community_signal_results.csv`. The app loads them relative to its project directory; no Windows paths or model download step is needed.
+## Step 4 — Check the live app
 
-### Frontend
+1. Open the Vercel URL and confirm the dashboard renders.
+2. Open the Vercel URL with `/admin` and refresh; it should serve the app rather than a 404.
+3. Open the Render `/api/health` endpoint and confirm the model and vectorizer loaded.
+4. From the website, submit a clearly labeled test report only if you accept that the free service's local data can disappear. Confirm it appears in the admin view, then do not treat it as a permanent record.
+5. Check admin login with the Render-only password and verify an incorrect password is rejected.
+6. Test AI chat only after configuring a cloud provider key. Do not expect the Render service to reach local Ollama.
 
-| Name | Value / purpose |
-| --- | --- |
-| `VITE_API_BASE_URL` | The public HTTPS origin of the Flask service, without a trailing `/api`. The Blueprint wires this to the backend service URL. |
-| `NODE_VERSION` | `22.15.0`, pinned by the Blueprint for Vite 8 compatibility. |
+## Local checks before publishing
 
-Only public URLs belong in `VITE_*` variables. Never put an AI key, admin password, or VAPID private key in frontend variables.
+From the repository root:
 
-## Verify after deployment
+```powershell
+cd communitysignalai/frontend
+npm ci
+npm run lint
+npm run build
+cd ..
+python tests\test_backend_suite.py
+```
 
-1. Open the static site's `onrender.com` URL. The homepage should render the existing React application.
-2. Open `/admin` directly and refresh to verify the SPA rewrite serves `index.html`.
-3. Open `https://<api-service>.onrender.com/api/health`; it should return JSON with `status: online`, `model_loaded: true`, and `vectorizer_loaded: true`.
-4. Verify a valid admin password with the Admin Console and confirm a wrong password is rejected.
-5. Submit only a clearly marked test report until durable storage is configured. On a Free service, that record will not survive service restart or spin-down.
-6. Cloud AI can be tested only after setting a valid provider key. Ollama on your PC is not reachable from Render by default.
+The current local checks passed in this workspace: frontend lint, Vite production build, and all 121 backend/ML suite checks. Re-run them after changing the source or dependencies.
 
-## Existing local data and phone alerts
+## If a deploy fails
 
-The private local `.env`, report CSV, admin logs, and push subscriptions are ignored by Git and are not uploaded by this deployment setup. Existing local reports are not automatically migrated. Back them up and choose a secure migration process after selecting durable hosted storage.
-
-For phone push alerts, use HTTPS, generate a VAPID key pair with `scripts/generate_vapid_keys.py`, add the public/private key and subject to the backend environment, sign into the deployed admin panel on the phone, and grant notification permission. Browsers may restrict push delivery when the site is not installed or notification permission is denied.
+- **Render import error for `peoplecare_backend`:** confirm the service root is `communitysignalai` and use the exact `--chdir app app:app` start command above.
+- **Vercel `/admin` returns 404 on refresh:** confirm the root directory is `communitysignalai/frontend` and `frontend/vercel.json` is on GitHub.
+- **Browser CORS error:** set `PEOPLECARE_CORS_ORIGINS` to the exact Vercel origin in Render and wait for redeploy.
+- **Frontend cannot reach API:** check `VITE_API_BASE_URL` in Vercel, then redeploy the frontend.
+- **Chat says provider unavailable:** add a valid backend cloud key; Render does not include your local Ollama installation.
+- **Reports disappear:** this is the known free service storage limit. Stop accepting real reports and arrange durable storage before using the site for real community activity.

@@ -29,11 +29,13 @@ function decodeApplicationServerKey(key) {
 }
 
 export default function AdminPanel({ access, onAccessChange, jsonFetch }) {
-  const phoneAdminUrl = typeof window === "undefined" ? "" : `${window.location.origin}/admin`;
   const phoneHost = typeof window === "undefined" ? "" : window.location.hostname.toLowerCase();
+  const phoneOrigin = typeof window === "undefined" ? "" : window.location.origin;
+  const isLoopbackPhoneHost = ["localhost", "127.0.0.1", "::1"].includes(phoneHost);
+  const isPrivateLanHost = /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(phoneHost) || phoneHost.endsWith(".local");
   const phoneLinkIsSecure = typeof window !== "undefined"
     && window.location.protocol === "https:"
-    && !["localhost", "127.0.0.1", "::1"].includes(phoneHost);
+    && !isLoopbackPhoneHost;
   const [passwordDraft, setPasswordDraft] = useState(access.password || "");
   const [reports, setReports] = useState([]);
   const [stats, setStats] = useState(null);
@@ -44,6 +46,8 @@ export default function AdminPanel({ access, onAccessChange, jsonFetch }) {
   const [auditEvents, setAuditEvents] = useState([]);
   const [activityEvents, setActivityEvents] = useState([]);
   const [pushConfig, setPushConfig] = useState(null);
+  const [phoneLanAddresses, setPhoneLanAddresses] = useState([]);
+  const [selectedPhoneLanAddress, setSelectedPhoneLanAddress] = useState("");
   const [phoneAlertsEnabled, setPhoneAlertsEnabled] = useState(false);
   const [pushBusy, setPushBusy] = useState(false);
   const [query, setQuery] = useState("");
@@ -55,6 +59,12 @@ export default function AdminPanel({ access, onAccessChange, jsonFetch }) {
   const [busyId, setBusyId] = useState(null);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+
+  const phoneAdminUrl = phoneLinkIsSecure || isPrivateLanHost
+    ? `${phoneOrigin}/admin`
+    : isLoopbackPhoneHost && selectedPhoneLanAddress
+      ? `http://${selectedPhoneLanAddress}:5173/admin`
+      : "";
 
   const loadData = useCallback(async () => {
     const keys = ["overview", "reports", "audit", "stats", "signals", "health", "provider", "notifications", "push"];
@@ -139,9 +149,28 @@ export default function AdminPanel({ access, onAccessChange, jsonFetch }) {
     return () => { cancelled = true; };
   }, [access.authenticated]);
 
+  useEffect(() => {
+    if (!access.authenticated || !isLoopbackPhoneHost) return undefined;
+    let cancelled = false;
+    jsonFetch("/api/admin/phone-link")
+      .then((result) => {
+        if (cancelled) return;
+        const addresses = Array.isArray(result.addresses) ? result.addresses : [];
+        setPhoneLanAddresses(addresses);
+        setSelectedPhoneLanAddress((current) => addresses.includes(current) ? current : addresses[0] || "");
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setPhoneLanAddresses([]);
+          setSelectedPhoneLanAddress("");
+        }
+      });
+    return () => { cancelled = true; };
+  }, [access.authenticated, isLoopbackPhoneHost, jsonFetch]);
+
   async function enablePhoneAlerts() {
     if (!phoneLinkIsSecure) {
-      setError("Deploy PeopleCare AI to HTTPS, then open /admin on your phone before enabling phone alerts.");
+      setError("Background push needs a secure HTTPS page. The local Wi-Fi Admin Console still works while it is open.");
       return;
     }
     if (!pushConfig?.configured) {
@@ -220,15 +249,15 @@ export default function AdminPanel({ access, onAccessChange, jsonFetch }) {
   }
 
   async function sharePhoneAdminLink() {
-    if (!phoneLinkIsSecure || !phoneAdminUrl) return;
+    if (!phoneAdminUrl) return;
     try {
       if (navigator.share) {
         await navigator.share({ title: "PeopleCare AI Admin Console", url: phoneAdminUrl });
       } else if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(phoneAdminUrl);
-        setNotice("Secure admin link copied. Open it on your phone and sign in there.");
+        setNotice("Admin link copied. Open it on a phone on the same Wi-Fi and sign in there.");
       } else {
-        throw new Error("This browser cannot share or copy the link. Scan the QR code instead.");
+        window.prompt("Copy this local admin link to your phone:", phoneAdminUrl);
       }
     } catch (shareError) {
       if (shareError.name !== "AbortError") setError(shareError.message || "Could not share the phone access link.");
@@ -390,27 +419,39 @@ export default function AdminPanel({ access, onAccessChange, jsonFetch }) {
         <div className="admin-phone-connect-layout">
           <div className="admin-phone-connect-copy">
             <span className="admin-kicker">PHONE CONNECTION</span>
-            <h2 id="admin-phone-alerts-title">Open your Admin Console on a phone</h2>
-            <p>Scan the QR code with your phone camera, open the secure PeopleCare AI site, then sign in with your admin password. Reports, status controls, analytics, and activity history use the same live backend.</p>
-            {!phoneLinkIsSecure && <div className="admin-phone-local-note" role="note">This page is running on a local development address. A phone cannot reach this computer through its own “localhost,” and push permissions require HTTPS. The QR and share link will become available after the site is deployed to HTTPS.</div>}
-            {!pushConfig?.configured && <small>Phone alerts also require the Flask server to have Web Push VAPID credentials configured.</small>}
+            <h2 id="admin-phone-alerts-title">Use Admin Console on your phone</h2>
+            <p>Open the local link on a phone connected to the same Wi-Fi. Sign in with your admin password to view the same reports, controls, analytics, and activity feed.</p>
+            <div className="admin-phone-local-note" role="note">
+              {isLoopbackPhoneHost
+                ? <>Local-only access: start the frontend with <code>npm run dev:lan</code>, keep this computer on the same Wi-Fi, then scan the QR. The admin activity feed refreshes while this page is open.</>
+                : <>Local network link: keep your phone and this computer on the same Wi-Fi. The admin activity feed refreshes while this page is open.</>}
+            </div>
+            {!phoneLinkIsSecure && <small>Background lock-screen push needs HTTPS and VAPID setup. This local HTTP link supports the Admin Console while open.</small>}
+            {isLoopbackPhoneHost && phoneLanAddresses.length > 1 && (
+              <label className="admin-phone-address-picker">
+                Network address
+                <select value={selectedPhoneLanAddress} onChange={(event) => setSelectedPhoneLanAddress(event.target.value)}>
+                  {phoneLanAddresses.map((address) => <option key={address} value={address}>{address}</option>)}
+                </select>
+              </label>
+            )}
           </div>
-          <div className="admin-phone-qr" aria-label={phoneLinkIsSecure ? "QR code for the secure admin page" : "Phone QR code unavailable before secure hosting"}>
-            {phoneLinkIsSecure
+          <div className="admin-phone-qr" aria-label={phoneAdminUrl ? "QR code for the PeopleCare AI Admin Console" : "Phone link unavailable until the local network address is detected"}>
+            {phoneAdminUrl
               ? <QRCodeSVG value={phoneAdminUrl} size={132} level="M" marginSize={2} title="Open PeopleCare AI Admin Console on your phone" />
-              : <div className="admin-phone-qr-placeholder" aria-hidden="true">QR<br />after HTTPS</div>}
-            <small>{phoneLinkIsSecure ? "Scan to open /admin" : "Secure deployment required"}</small>
-            {phoneLinkIsSecure && <button type="button" className="admin-secondary-button" onClick={sharePhoneAdminLink}>Share secure link</button>}
+              : <div className="admin-phone-qr-placeholder" aria-hidden="true">LAN QR<br />not found</div>}
+            <small>{phoneAdminUrl ? isPrivateLanHost ? "Scan to open /admin on this Wi-Fi" : phoneLinkIsSecure ? "Scan secure admin link" : "Scan local admin link" : "No local address detected"}</small>
+            {phoneAdminUrl && <button type="button" className="admin-secondary-button" onClick={sharePhoneAdminLink}>Share / copy link</button>}
           </div>
-        </div>
-        <div className="admin-phone-actions">
-          {phoneAlertsEnabled
-            ? <button type="button" className="admin-secondary-button" disabled={pushBusy} onClick={disablePhoneAlerts}>{pushBusy ? "Updating…" : "Disable alerts on this device"}</button>
-            : <button type="button" className="admin-primary-button" disabled={pushBusy || !pushConfig?.configured || !phoneLinkIsSecure} onClick={enablePhoneAlerts}>{pushBusy ? "Enabling…" : phoneLinkIsSecure ? "Enable phone alerts" : "Enable alerts after HTTPS hosting"}</button>}
-          {phoneAlertsEnabled && <button type="button" className="admin-secondary-button" disabled={pushBusy} onClick={sendTestPhoneAlert}>{pushBusy ? "Sending…" : "Send test alert"}</button>}
-          <span className={`admin-state ${phoneAlertsEnabled ? "good" : pushConfig?.configured ? "warn" : ""}`}>
-            {phoneAlertsEnabled ? "This device enabled" : !phoneLinkIsSecure ? "Waiting for phone HTTPS setup" : pushConfig?.configured ? `${pushConfig.device_count || 0} device(s) subscribed` : "Push setup required"}
-          </span>
+          <div className="admin-phone-actions">
+            {phoneAlertsEnabled
+              ? <button type="button" className="admin-secondary-button" disabled={pushBusy} onClick={disablePhoneAlerts}>{pushBusy ? "Updating..." : "Disable push on this device"}</button>
+              : <button type="button" className="admin-primary-button" disabled={pushBusy || !pushConfig?.configured || !phoneLinkIsSecure} onClick={enablePhoneAlerts}>{pushBusy ? "Enabling..." : phoneLinkIsSecure ? "Enable background push" : "Background push needs HTTPS"}</button>}
+            {phoneAlertsEnabled && <button type="button" className="admin-secondary-button" disabled={pushBusy} onClick={sendTestPhoneAlert}>{pushBusy ? "Sending..." : "Send test alert"}</button>}
+            <span className={`admin-state ${phoneAlertsEnabled ? "good" : pushConfig?.configured ? "warn" : ""}`}>
+              {phoneAlertsEnabled ? "Push enabled on this browser" : !phoneLinkIsSecure ? "In-page alerts while open" : pushConfig?.configured ? `${pushConfig.device_count || 0} device(s) subscribed` : "VAPID setup required for push"}
+            </span>
+          </div>
         </div>
       </section>
 
